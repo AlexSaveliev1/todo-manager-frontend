@@ -1,0 +1,15 @@
+<div class="task-board-wrapper flex-80">
+  Inbox
+  {{#task-list}}
+    {{#each tasks as |task|}}
+    {{task-list/item id=task.id title=task.title onSave=(action "saveTask")}}
+    {{/each}}
+
+    {{#if addNewTaskMode}}
+      {{task-list/item addNewMode=addNewTaskMode onAddNew=(action "addTask") cancelAction=(action (mut addNewTaskMode) (not addNewTaskMode)) saveButtonLabel="Add task"}}
+    {{else}}
+      <div {{action (mut addNewTaskMode) (not addNewTaskMode)}}>+ Add task</div>
+    {{/if}}
+    
+  {{/task-list}}
+</div>

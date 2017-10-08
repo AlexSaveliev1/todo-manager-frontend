@@ -1,0 +1,13 @@
+@import '../variables';
+
+.task-board-wrapper {
+  height: 100%;
+  background-color: $white;
+
+  padding-top: 45px;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  border-right: 1px solid $softGrey;
+  border-left: 1px solid $softGrey;
+}

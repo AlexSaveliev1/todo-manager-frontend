@@ -1,0 +1,10 @@
+@import '../variables';
+
+.dashboard-wrapper {
+  min-height: 100vh;
+  background-color: $generalBackgroundColor;
+
+  .dashboard-container {
+    height: calc(100% - #{$headerHeight})
+  }
+}

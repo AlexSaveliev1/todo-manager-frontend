@@ -1,0 +1,21 @@
+@import '../variables';
+
+.left-bar-wrapper {
+  padding-top: 30px;
+  padding-right: 20px;
+
+  .left-bar-menu {
+    .left-bar-filter-item-wrapper {
+      list-style-type: none;
+  
+      .left-bar-filter-item {
+        padding: 10px 15px;
+        display: block;
+
+        &.active {
+          background-color: $white;
+        }
+      }
+    }
+  } 
+}

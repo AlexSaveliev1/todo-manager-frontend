@@ -1,0 +1,36 @@
+<div class="task-list-item-content layout-column">
+  {{#if editMode}}
+    <div class="layout-row layout-align-space-between">
+      {{paper-input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
+      {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+    </div>
+    
+    <div class="layout-row">
+      {{#paper-button onClick=(action 'save') primary=true class="task-list-item-button"}}Save{{/paper-button}}
+      {{#paper-button onClick=(action 'cancel') warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+    </div>
+
+  {{else if addNewMode}}
+    <div class="layout-row layout-align-space-between">
+      {{paper-input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
+      {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+    </div>
+    
+    <div class="layout-row">
+      {{#paper-button onClick=(action 'addNew') primary=true class="task-list-item-button"}}Add new task{{/paper-button}}
+      {{#paper-button onClick=(action 'cancel') warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+    </div>
+  
+  {{else}}
+    <div class="layout-row">
+      {{paper-radio toggle=true value="Toggable" groupValue=toggleValue
+        onChange=(action (mut toggleValue))}}
+      <div class="task-list-item-value layout-row">
+        <div>{{title}}</div>
+        <div {{action (mut editMode) (not editMode)}} class="task-list-item-edit-icon-wrapper">
+          {{paper-icon "mode-edit" size=24 class="task-list-item-edit-icon"}}
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</div>

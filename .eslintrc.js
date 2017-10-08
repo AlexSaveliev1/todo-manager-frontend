@@ -1,13 +1,9 @@
 module.exports = {
-  root: true,
-  parserOptions: {
-    ecmaVersion: 2017,
-    sourceType: 'module'
-  },
-  extends: 'eslint:recommended',
-  env: {
-    browser: true
-  },
-  rules: {
-  }
+  extends: [
+    './eslint_configs/defaults.json',
+    './eslint_configs/browser.json',
+    './eslint_configs/es6.json',
+    './eslint_configs/node.json',
+    './eslint_configs/ember.json'
+  ]
 };

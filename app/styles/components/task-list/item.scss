@@ -1,0 +1,57 @@
+@import '../../variables';
+
+.task-list-item-wrapper {
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  list-style-type: none;
+  border-bottom: 1px solid $softGrey;
+
+  &:hover {
+    .task-list-item-content {
+      .task-list-item-value {
+        .task-list-item-edit-icon-wrapper {
+          display: block;
+        }
+      }
+    }
+  }
+  
+  .task-list-item-content {
+    .task-list-item-input, .task-list-item-button {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .task-list-item-datepicker {
+      width: 20%;
+      height: 29px;
+
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      outline: none;
+    }
+    
+    .task-list-item-value {
+      position: relative;
+
+      .task-list-item-edit-icon-wrapper {
+        display: none;
+        position: relative;
+        bottom: 13px;
+        left: 5px;
+        user-select: none;
+  
+        .task-list-item-edit-icon {
+          cursor: pointer;
+  
+          &:hover {
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+}
