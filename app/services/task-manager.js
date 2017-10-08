@@ -11,6 +11,14 @@ export default Ember.Service.extend({
       });
   },
 
+  delete(id) {
+    return this.get('store').findRecord('task', id, { reload: true })
+      .then(task => {
+        task.deleteRecord();
+        task.save();
+      });
+  },
+
   addOne(properties) {
     return new Promise(resolve => {
       const newTask = this.get('store').createRecord('task', properties);

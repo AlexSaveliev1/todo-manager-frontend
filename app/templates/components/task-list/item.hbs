@@ -1,36 +1,57 @@
 <div class="task-list-item-content layout-column">
   {{#if editMode}}
-    <div class="layout-row layout-align-space-between">
-      {{paper-input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
-      {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
-    </div>
-    
-    <div class="layout-row">
-      {{#paper-button onClick=(action 'save') primary=true class="task-list-item-button"}}Save{{/paper-button}}
-      {{#paper-button onClick=(action 'cancel') warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
-    </div>
+    {{#paper-form onSubmit=(action "save") as |form|}}
+      <div class="layout-row layout-align-space-between">
+        {{form.input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
+        {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+      </div>
+      
+      <div class="layout-row">
+        {{#form.submit-button onClick=(action "save") primary=true class="task-list-item-button"}}Save{{/form.submit-button}}
+        {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+      </div>
+    {{/paper-form}}
 
   {{else if addNewMode}}
-    <div class="layout-row layout-align-space-between">
-      {{paper-input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
-      {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
-    </div>
-    
-    <div class="layout-row">
-      {{#paper-button onClick=(action 'addNew') primary=true class="task-list-item-button"}}Add new task{{/paper-button}}
-      {{#paper-button onClick=(action 'cancel') warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
-    </div>
+    {{#paper-form onSubmit=(action "save") as |form|}}
+      <div class="layout-row layout-align-space-between">
+        {{form.input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
+        {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+      </div>
+      
+      <div class="layout-row">
+        {{#form.submit-button onClick=(action "addNew") primary=true class="task-list-item-button"}}Add new task{{/form.submit-button}}
+        {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+      </div>
+    {{/paper-form}}
   
   {{else}}
-    <div class="layout-row">
+    <div class="layout-row layout-align-center-center">
       {{paper-radio toggle=true value="Toggable" groupValue=toggleValue
-        onChange=(action (mut toggleValue))}}
+        onChange=(action (mut toggleValue)) class="task-list-item-radio"}}
       <div class="task-list-item-value layout-row">
         <div>{{title}}</div>
         <div {{action (mut editMode) (not editMode)}} class="task-list-item-edit-icon-wrapper">
           {{paper-icon "mode-edit" size=24 class="task-list-item-edit-icon"}}
         </div>
       </div>
-    </div>
+      <div class="task-list-item-menu-wrapper">
+        {{#paper-menu as |menu|}}
+          {{#menu.trigger}}
+            {{#paper-button onClick=null iconButton=true}}
+              {{paper-icon "more-vert" class="md-menu-origin"}}
+            {{/paper-button}}
+          {{/menu.trigger}}
+
+          {{#menu.content as |content|}}
+              {{#content.menu-item onClick=(action "delete")}}
+                {{paper-icon "delete" class="md-menu-align-target"}}
+                <span>Delete</span>
+              {{/content.menu-item}}
+          {{/menu.content}}
+        {{/paper-menu}}
+      </div>
+     
+   </div>
   {{/if}}
 </div>

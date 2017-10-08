@@ -7,6 +7,10 @@
   list-style-type: none;
   border-bottom: 1px solid $softGrey;
 
+  &.no-border {
+    border-bottom: none;
+  }
+
   &:hover {
     .task-list-item-content {
       .task-list-item-value {
@@ -33,10 +37,15 @@
       border-left: none;
       outline: none;
     }
+
+    .task-list-item-radio {
+      margin-bottom: 7px;
+    }
     
     .task-list-item-value {
+      min-height: 25px;      
       position: relative;
-
+      
       .task-list-item-edit-icon-wrapper {
         display: none;
         position: relative;
@@ -53,5 +62,9 @@
         }
       }
     }
+  }
+
+  .task-list-item-menu-wrapper {
+    margin-left: auto;
   }
 }

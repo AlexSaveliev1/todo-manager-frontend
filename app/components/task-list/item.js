@@ -8,10 +8,11 @@ export default Ember.Component.extend({
   },
 
   classNames: ['task-list-item-wrapper'],
+  classNameBindings: ['addNewMode:no-border'],
   tagName: 'li',
 
   title: '',
-  titleToChange: '',
+  titleToChange: '', // TODO: Make object that will take all properties to change and push ot action
   dueDate: '',
   dueDateToChange: '',
   editMode: false,
@@ -36,7 +37,14 @@ export default Ember.Component.extend({
       const titleToChange = this.get('titleToChange'),
         dueDateToChange = this.get('dueDateToChange');
 
-      this.sendAction('onAddNew', { titleToChange, dueDateToChange})
+      titleToChange && this.sendAction('onAddNew', { titleToChange, dueDateToChange });
+    },
+
+    delete() {
+      this.sendAction('onDelete', {
+        id: this.get('id'),
+        title: this.get('title')
+      });
     }
   }
 });
