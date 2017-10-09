@@ -5,6 +5,7 @@
   background-color: $generalBackgroundColor;
 
   .dashboard-container {
+    width: 950px;
     height: calc(100% - #{$headerHeight})
   }
 }

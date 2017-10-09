@@ -1,5 +1,35 @@
 <aside class="left-bar-menu">
-  {{!-- TODO: Make itarating array --}}
-  {{left-bar/filter-item label="Inbox" link='index.task-board' tagName="li" className="left-bar-filter-item"}}
-  {{left-bar/filter-item label="Today" link='index.task-board' queryParams=todayQuery tagName="li" className="left-bar-filter-item"}}
+  <nav>
+    {{#each filters as |filter|}}
+      {{left-bar/filter-item label=filter.label icon=filter.icon
+        link=filter.link title=filter.label queryParams=filter.queryParams
+        tagName=filter.tagName className=filter.className}}
+    {{/each}}
+  </nav>
+ 
+  {{!-- {{left-bar/filter-item label="Inbox" icon="Inbox" link='index.task-board' tagName="li" className="left-bar-filter-item"}}
+  {{left-bar/filter-item label="Today" icon="Today" link='index.task-board' queryParams=todayQuery tagName="li" className="left-bar-filter-item"}}
+  {{left-bar/filter-item label="Next 7 days" icon="schedule" queryParams=todayQuery tagName="li" className="left-bar-filter-item"}} --}}
+
+  {{#paper-tabs primary=true
+    borderBottom=true
+    stretch=true
+    selected=selectedTab
+    class="left-bar-menu-tabs"
+    onChange=(action (mut selectedTab)) as |tabs|}}
+
+    {{#each menuTabs as |tab|}}
+      {{#tabs.tab value=tab}}
+        {{tab.title}}
+      {{/tabs.tab}}
+    {{/each}}
+  {{/paper-tabs}}
+
+  {{#liquid-bind (hash tab=selectedTab.index m=selectedTab) class="md-padding dynamic-animation" as |current|}}
+    <p>{{current.m.body}}</p>
+    {{#each current.m.filters as |filter|}}
+      {{left-bar/filter-item label=filter.title
+      link=filter.link title=filter.title queryParams=filter.queryParams}}
+    {{/each}}
+  {{/liquid-bind}}
 </aside>

@@ -2,8 +2,8 @@
   {{#if editMode}}
     {{#paper-form onSubmit=(action "save") as |form|}}
       <div class="layout-row layout-align-space-between">
-        {{form.input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
-        {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
+        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="2017, 2020" format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
       </div>
       
       <div class="layout-row">
@@ -15,8 +15,8 @@
   {{else if addNewMode}}
     {{#paper-form onSubmit=(action "save") as |form|}}
       <div class="layout-row layout-align-space-between">
-        {{form.input onChange=(action (mut titleToChange)) label="Name" value=titleToChange class="task-list-item-input flex-75"}}
-        {{pikaday-input onSelection=(action (mut dueDateToChange)) format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
+        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="2017, 2020" format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
       </div>
       
       <div class="layout-row">
@@ -29,13 +29,15 @@
     <div class="layout-row layout-align-center-center">
       {{paper-radio toggle=true value="Toggable" groupValue=toggleValue
         onChange=(action (mut toggleValue)) class="task-list-item-radio"}}
-      <div class="task-list-item-value layout-row">
+      <div class="task-list-item-value layout-row layout-align-center-center">
         <div>{{title}}</div>
         <div {{action (mut editMode) (not editMode)}} class="task-list-item-edit-icon-wrapper">
           {{paper-icon "mode-edit" size=24 class="task-list-item-edit-icon"}}
         </div>
       </div>
-      <div class="task-list-item-menu-wrapper">
+      
+      <div class="layout-row layout-align-center-center margin-left-auto">
+        <div class="task-list-item-duedate">{{dueDate}}</div>
         {{#paper-menu as |menu|}}
           {{#menu.trigger}}
             {{#paper-button onClick=null iconButton=true}}
@@ -43,15 +45,20 @@
             {{/paper-button}}
           {{/menu.trigger}}
 
-          {{#menu.content as |content|}}
-              {{#content.menu-item onClick=(action "delete")}}
-                {{paper-icon "delete" class="md-menu-align-target"}}
-                <span>Delete</span>
-              {{/content.menu-item}}
+          {{#menu.content class="task-list-item-menu" as |content|}}
+            {{#content.menu-item onClick=(action (mut editMode) (not editMode))}}
+              {{paper-icon "mode-edit" class="md-menu-align-target"}}
+              <span>Edit</span>
+            {{/content.menu-item}}
+
+            {{#content.menu-item onClick=(action "delete")}}
+              {{paper-icon "delete" class="md-menu-align-target"}}
+              <span>Delete</span>
+            {{/content.menu-item}}
           {{/menu.content}}
         {{/paper-menu}}
       </div>
-     
+      
    </div>
   {{/if}}
 </div>

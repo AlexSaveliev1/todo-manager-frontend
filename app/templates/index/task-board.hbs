@@ -1,29 +1,20 @@
-<div class="task-board-wrapper flex-80">
+<div class="task-board-wrapper flex-70">
   Inbox
   {{#task-list}}
     {{#each tasks as |task|}}
-    {{task-list/item id=task.id title=task.title onSave=(action "saveTask") onDelete=(action "confirmDelete")}}
+      {{task-list/item id=task.id title=task.title dueDateMs=task.dueDate onSave=(action "saveTask") onDelete=(action "confirmDelete")}}
     {{/each}}
 
     {{#if addNewTaskMode}}
       {{task-list/item addNewMode=addNewTaskMode onAddNew=(action "addTask") cancelAction=(action (mut addNewTaskMode) (not addNewTaskMode)) saveButtonLabel="Add task"}}
     {{else}}
-      <div {{action (mut addNewTaskMode) (not addNewTaskMode)}}>+ Add task</div>
+      <div {{action (mut addNewTaskMode) (not addNewTaskMode)}} class="task-board-add-task">+ Add Task</div>
     {{/if}}
   {{/task-list}}
 
   {{#if isConfirmDialogVisible}}
-    {{#paper-dialog onClose=(action "cancelDelete") fullscreen="true" clickOutsideToClose="true"}}
-      {{#paper-dialog-content}}
-        <h2 class="md-title">Confirm delete</h2>
-        <p>Are you sure you want to delete "{{taskTitleToDelete}}" ?</p>
-      {{/paper-dialog-content}}
-
-      {{#paper-dialog-actions class="layout-row"}}
-        <span class="flex"></span>
-        {{#paper-button primary=true onClick=(action "cancelDelete")}}Cancel{{/paper-button}}
-        {{#paper-button warn=true onClick=(action "deleteTask")}}Delete{{/paper-button}}
-      {{/paper-dialog-actions}}
-    {{/paper-dialog}}
+    {{confirm-dialog onConfirm=(action "deleteTask") onCancel=(action "cancelDelete")
+      fullscreen="true" clickOutsideToClose="true" title="Confirm delete" confirmButtonLabel="Delete"
+      question=(concat "Are you sure you want to delete '" taskTitleToDelete "' ?")}}
   {{/if}}
 </div>

@@ -24,7 +24,6 @@ export default Ember.Service.extend({
       const newTask = this.get('store').createRecord('task', properties);
 
       newTask.save();
-
       resolve();
     });
   }

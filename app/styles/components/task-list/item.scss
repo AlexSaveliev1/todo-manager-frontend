@@ -39,7 +39,7 @@
     }
 
     .task-list-item-radio {
-      margin-bottom: 7px;
+      margin-bottom: 0px;
     }
     
     .task-list-item-value {
@@ -62,9 +62,15 @@
         }
       }
     }
-  }
 
-  .task-list-item-menu-wrapper {
-    margin-left: auto;
+    .task-list-item-duedate {
+      font-size: 14px;
+      color: #2095F2;
+      text-decoration: underline;
+    }
   }
+}
+
+.task-list-item-menu {
+  width: 140px;
 }

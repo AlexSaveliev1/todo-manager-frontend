@@ -1,7 +1,7 @@
 @import '../variables';
 
 .task-board-wrapper {
-  height: 100%;
+  min-height: calc(100vh - #{$headerHeight});
   background-color: $white;
 
   padding-top: 45px;
@@ -10,4 +10,11 @@
 
   border-right: 1px solid $softGrey;
   border-left: 1px solid $softGrey;
+
+  .task-board-add-task {
+    color: #DB4C3F; // TODO: change color according to design
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+  }
 }

@@ -10,8 +10,8 @@ export default Ember.Controller.extend({
   isConfirmDialogVisible: false,
 
   actions: {
-    saveTask({ id, titleToChange, dueDateToChange }) {
-      this.get('taskManager').save(id, { title: titleToChange, dueDate: dueDateToChange });
+    saveTask({ id, titleToChange, dueDateToChange, updatedAt }) {
+      this.get('taskManager').save(id, { title: titleToChange, dueDate: dueDateToChange, updatedAt });
     },
 
     confirmDelete({ id, title }) {
@@ -33,8 +33,8 @@ export default Ember.Controller.extend({
         .then(() => this.setProperties({ taskIdToDelete: '', taskTitleToDelete: '', isConfirmDialogVisible: false }));
     },
 
-    addTask({ titleToChange, dueDateToChange }) {
-      this.get('taskManager').addOne({ title: titleToChange, dueDate: dueDateToChange })
+    addTask({ title, dueDate, createdAt }) {
+      this.get('taskManager').addOne({ title, dueDate, createdAt })
         .then(() => this.set('addNewTaskMode', false));
     }
   }
