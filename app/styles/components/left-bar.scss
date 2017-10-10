@@ -16,7 +16,7 @@
         padding: 13px 15px;
 
         &.active {
-          font-weight: 500;
+          font-weight: $medium-font-weight;
           background-color: $white;
         }
 
@@ -28,6 +28,28 @@
       .left-bar-filter-item-icon {
         margin-left: 0;
         margin-right: 13px;
+      }
+    }
+
+    .left-bar-group-item-wrapper {
+      .left-bar-menu-group-item {
+        min-height: 42px;
+        display: block;
+        box-sizing: border-box;
+
+        color: $black;
+        text-decoration: none;
+        padding: 10px 15px;
+        margin-bottom: 3px;
+
+        &:hover {
+          background-color: $white;
+          border-bottom: 2px solid #e91e63;
+        }
+
+        &.active {
+          font-weight: $medium-font-weight;
+        }
       }
     }
 

@@ -24,7 +24,7 @@ export default Ember.Component.extend({
     },
     {
       label: 'Today',
-      icon: 'Inbox',
+      icon: 'Today',
       tagName: 'li',
       className: 'left-bar-filter-item',
       link: 'index.task-board',
@@ -45,32 +45,34 @@ export default Ember.Component.extend({
     }];
   }),
 
-  menuTabs: [{
-    title: 'Groups',
-    body: 'trololo'
-  },
-  {
-    title: 'Filters',
-    filters: [{
-      title: 'Priority 1',
-      link: 'index.task-board',
-      queryParams: {
-        priority: 1
-      }
+  menuTabs: Ember.computed('model.groups', function () {
+    return [{
+      title: 'Groups',
+      groups: this.get('groups')
     },
     {
-      title: 'Priority 2',
-      link: 'index.task-board',
-      queryParams: {
-        priority: 2
-      }
-    },
-    {
-      title: 'Priority 3',
-      link: 'index.task-board',
-      queryParams: {
-        priority: 3
-      }
+      title: 'Filters',
+      filters: [{
+        title: 'Priority 1',
+        link: 'index.task-board',
+        queryParams: {
+          priority: 1
+        }
+      },
+      {
+        title: 'Priority 2',
+        link: 'index.task-board',
+        queryParams: {
+          priority: 2
+        }
+      },
+      {
+        title: 'Priority 3',
+        link: 'index.task-board',
+        queryParams: {
+          priority: 3
+        }
+      }]
     }]
-  }]
+  })
 });

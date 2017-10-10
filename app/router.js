@@ -8,7 +8,8 @@ const Router = Ember.Router.extend({
 
 Router.map(function () {
   this.route('index', { path: '/' }, function () {
-    this.route('task-board', { path: '/task-board/:title' });
+    this.route('task-board', { path: '/:title' });
+    this.route('group', { path: '/group/:id' });
   });
 });
 

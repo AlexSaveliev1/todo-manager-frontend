@@ -6,10 +6,6 @@
         tagName=filter.tagName className=filter.className}}
     {{/each}}
   </nav>
- 
-  {{!-- {{left-bar/filter-item label="Inbox" icon="Inbox" link='index.task-board' tagName="li" className="left-bar-filter-item"}}
-  {{left-bar/filter-item label="Today" icon="Today" link='index.task-board' queryParams=todayQuery tagName="li" className="left-bar-filter-item"}}
-  {{left-bar/filter-item label="Next 7 days" icon="schedule" queryParams=todayQuery tagName="li" className="left-bar-filter-item"}} --}}
 
   {{#paper-tabs primary=true
     borderBottom=true
@@ -26,10 +22,16 @@
   {{/paper-tabs}}
 
   {{#liquid-bind (hash tab=selectedTab.index m=selectedTab) class="md-padding dynamic-animation" as |current|}}
-    <p>{{current.m.body}}</p>
-    {{#each current.m.filters as |filter|}}
-      {{left-bar/filter-item label=filter.title
-      link=filter.link title=filter.title queryParams=filter.queryParams}}
-    {{/each}}
+    {{#if current.m.groups}}
+      {{#each current.m.groups as |group|}}
+        {{left-bar/group-item label=group.title
+        link=group.link param=group.id className="left-bar-menu-group-item"}}
+      {{/each}}
+    {{else}}
+      {{#each current.m.filters as |filter|}}
+        {{left-bar/filter-item label=filter.title
+        link=filter.link title=filter.title queryParams=filter.queryParams}}
+      {{/each}}
+    {{/if}}
   {{/liquid-bind}}
 </aside>
