@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   }),
 
   selectedTab: 0,
+  addNewGroup: false,
 
   filters: Ember.computed(function () {
     return [{
@@ -73,6 +74,6 @@ export default Ember.Component.extend({
           priority: 3
         }
       }]
-    }]
+    }];
   })
 });

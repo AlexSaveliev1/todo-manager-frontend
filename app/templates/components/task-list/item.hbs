@@ -13,7 +13,7 @@
     {{/paper-form}}
 
   {{else if addNewMode}}
-    {{#paper-form onSubmit=(action "save") as |form|}}
+    {{#paper-form onSubmit=(action "addNew") as |form|}}
       <div class="layout-row layout-align-space-between">
         {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
         {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="2017, 2020" format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
@@ -51,10 +51,24 @@
               <span>Edit</span>
             {{/content.menu-item}}
 
+
+            {{#each priorityItems as |priorityItem|}}
+              {{#content.menu-item onClick=(action "changePriority" priorityItem.value)}}
+                {{paper-icon priorityItem.icon class="md-menu-align-target"}}
+                <span>{{priorityItem.title}}</span>
+              {{/content.menu-item}}
+            {{/each}}
+            
             {{#content.menu-item onClick=(action "delete")}}
               {{paper-icon "delete" class="md-menu-align-target"}}
               <span>Delete</span>
             {{/content.menu-item}}
+
+            {{#content.menu-item onClick=(action "delete")}}
+              {{paper-icon "note-add" class="md-menu-align-target"}}
+              <span>Add subtask</span>
+            {{/content.menu-item}}
+
           {{/menu.content}}
         {{/paper-menu}}
       </div>

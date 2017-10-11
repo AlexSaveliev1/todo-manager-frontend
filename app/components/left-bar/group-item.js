@@ -1,5 +1,19 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  classNames: ['left-bar-group-item-wrapper']
+  classNames: ['left-bar-group-item-wrapper'],
+
+  actions: {
+    addNew() {
+
+    },
+
+    cancel() {
+
+    },
+
+    save() {
+
+    }
+  }
 });

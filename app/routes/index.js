@@ -5,7 +5,7 @@ export default Ember.Route.extend({
   groupManager: Ember.inject.service(),
 
   model() {
-    const groupQuery = this.get('groupManager').getAll();
+    const groupQuery = this.get('groupManager').findAll();
 
     return RSVP.hash({
       groups: groupQuery

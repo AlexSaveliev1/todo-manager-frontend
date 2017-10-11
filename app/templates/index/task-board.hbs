@@ -2,7 +2,8 @@
   Inbox
   {{#task-list}}
     {{#each tasks as |task|}}
-      {{task-list/item id=task.id title=task.title dueDateMs=task.dueDate onSave=(action "saveTask") onDelete=(action "confirmDelete")}}
+      {{task-list/item id=task.id title=task.title dueDateMs=task.dueDate
+      onSave=(action "saveTask") onDelete=(action "confirmDelete") onChangePriority=(action "changePriority")}}
     {{/each}}
 
     {{#if addNewTaskMode}}

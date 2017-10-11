@@ -23,8 +23,12 @@ export default Ember.Service.extend({
     return new Promise(resolve => {
       const newTask = this.get('store').createRecord('task', properties);
 
-      newTask.save();
-      resolve();
+      newTask.save()
+        .then(savedTask => resolve(savedTask));
     });
+  },
+
+  findOne(id) {
+    return this.get('store').findRecord('task', id);
   }
 });

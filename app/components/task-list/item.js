@@ -25,6 +25,26 @@ export default Ember.Component.extend({
     });
   })),
 
+  priorityItems: Ember.computed(function () {
+    return [
+      {
+        title: 'Priority 1',
+        value: 1,
+        icon: 'flag'
+      },
+      {
+        title: 'Priority 2',
+        value: 2,
+        icon: 'flag'
+      },
+      {
+        title: 'Priority 3',
+        value: 3,
+        icon: 'flag'
+      }
+    ];
+  }),
+
   actions: {
     cancel() {
       this.get('cancelAction') ? this.sendAction('cancelAction') : this.set('editMode', !this.editMode);
@@ -51,8 +71,10 @@ export default Ember.Component.extend({
     addNew() {
       const title = this.get('titleToChange'),
         dueDate = this.get('dueDateToChange'),
+        groupId = this.get('groupId'),
         newItem = {
           title,
+          groupId,
           dueDate: this.get('timeManager').getMidnightMsOfDate(dueDate),
           createdAt: this.get('timeManager').getTodayMidnightMs()
         };
@@ -60,9 +82,16 @@ export default Ember.Component.extend({
       title && this.sendAction('onAddNew', newItem);
     },
 
+    changePriority(value) {
+      const id = this.get('id');
+
+      this.sendAction('onChangePriority', { id, value });
+    },
+
     delete() {
       this.sendAction('onDelete', {
         id: this.get('id'),
+        groupId: this.get('groupId'),
         title: this.get('title')
       });
     }

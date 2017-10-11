@@ -2,8 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   taskManager: Ember.inject.service(),
+  groupManager: Ember.inject.service(),
 
-  tasks: Ember.computed.alias('model.tasks'),
+  groups: Ember.computed('model.groups', function () {
+    return this.get('model.groups');
+  }),
+
+  tasks: Ember.computed('model.tasks', function () {
+    return this.get('model.tasks');
+  }),
+
   taskIdToDelete: '',
   taskTitleToDelete: '',
   addNewTaskMode: false,
@@ -27,7 +35,7 @@ export default Ember.Controller.extend({
     },
 
     deleteTask() {
-      const id = this.get('taskIdToDelete');
+      const id = this.get('taskIdToDelete')
 
       this.get('taskManager').delete(id)
         .then(() => this.setProperties({ taskIdToDelete: '', taskTitleToDelete: '', isConfirmDialogVisible: false }));
@@ -36,6 +44,11 @@ export default Ember.Controller.extend({
     addTask({ title, dueDate, createdAt }) {
       this.get('taskManager').addOne({ title, dueDate, createdAt })
         .then(() => this.set('addNewTaskMode', false));
+    },
+
+    changePriority({ id, value }) {
+      this.get('taskManager').save(id, { priority: value });
     }
+
   }
 });

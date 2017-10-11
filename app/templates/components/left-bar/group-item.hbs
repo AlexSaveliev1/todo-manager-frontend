@@ -1,5 +1,20 @@
-{{#link-to 'index.group' 2 tag=tagName class=className}}
+{{#if addNewMode}}
+  {{#paper-form class="left-bar-group-item-add-new-form" onSubmit=(action "addNew") as |form|}}
+    <div class="layout-row layout-align-space-between">
+      {{form.input onChange=(action (mut titleToChange)) label="Projects" value=titleToChange class="left-bar-group-item-input"}}
+    </div>
+      
+    <div class="layout-row">
+      {{#form.submit-button onClick=(action "addNew") primary=true class="task-list-item-button"}}Add{{/form.submit-button}}
+      {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+    </div>
+  {{/paper-form}}
+{{/if}}
+
+{{#link-to 'index.task-board' title (query-params groupId=queryParam) tag=tagName class=className}}
   <div class="layout-row layout-align-start-center">
-    {{label}}
+    {{title}}
   </div>
 {{/link-to}}
+
+

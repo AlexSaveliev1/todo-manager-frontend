@@ -51,6 +51,24 @@
           font-weight: $medium-font-weight;
         }
       }
+
+      .left-bar-group-item-add-new-form {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .left-bar-group-item-input {
+        width: 100%;
+        font-size: 15px;
+        // padding: 10px;
+        margin-bottom: 0;
+      }
+    }
+
+    .left-bar-add-group {
+      color: #DB4C3F; // TODO: change color according to design
+      font-size: 15px;
+      margin-top: 10px;
+      cursor: pointer;
     }
 
     .left-bar-menu-tabs {

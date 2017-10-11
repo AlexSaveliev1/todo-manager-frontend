@@ -7,5 +7,7 @@ export default DS.Model.extend({
   finishedAt: DS.attr('number'),
   updatedAt: DS.attr('number'),
   deletedAt: DS.attr('number'),
+  groupId: DS.attr('number'),
+  priority: DS.attr('number'),
   subtasks: DS.attr('array')
 });

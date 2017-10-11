@@ -3,11 +3,15 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
 
-  getAll() {
+  findAll() {
     return this.get('store').findAll('group');
   },
 
-  getOne(id) {
-    return this.get('store').findRecord('group', id); // TODO: Include tasks property
+  findOne(id) {
+    return this.get('store').findRecord('group', id);
+  },
+
+  findOneAndRemoveTask() {
+    return '';
   }
 });
