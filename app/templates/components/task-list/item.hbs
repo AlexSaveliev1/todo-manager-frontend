@@ -7,8 +7,8 @@
       </div>
       
       <div class="layout-row">
-        {{#form.submit-button onClick=(action "save") primary=true class="task-list-item-button"}}Save{{/form.submit-button}}
-        {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+        {{#form.submit-button primary=true class="task-list-item-button"}}Save{{/form.submit-button}}
+        {{#paper-button onClick=(action "cancelEdit") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
       </div>
     {{/paper-form}}
 
@@ -20,7 +20,7 @@
       </div>
       
       <div class="layout-row">
-        {{#form.submit-button onClick=(action "addNew") primary=true class="task-list-item-button"}}Add new task{{/form.submit-button}}
+        {{#form.submit-button primary=true class="task-list-item-button"}}Add new task{{/form.submit-button}}
         {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
       </div>
     {{/paper-form}}
@@ -72,7 +72,6 @@
           {{/menu.content}}
         {{/paper-menu}}
       </div>
-      
    </div>
   {{/if}}
 </div>

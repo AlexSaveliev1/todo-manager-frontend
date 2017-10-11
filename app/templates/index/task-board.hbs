@@ -1,13 +1,14 @@
 <div class="task-board-wrapper flex-70">
-  Inbox
+  <h2>{{model.boardTitle}}</h2>
   {{#task-list}}
     {{#each tasks as |task|}}
-      {{task-list/item id=task.id title=task.title dueDateMs=task.dueDate
+      {{task-list/item id=task.id title=task.title dueDateMs=task.dueDate groupId=task.groupId
       onSave=(action "saveTask") onDelete=(action "confirmDelete") onChangePriority=(action "changePriority")}}
     {{/each}}
 
     {{#if addNewTaskMode}}
-      {{task-list/item addNewMode=addNewTaskMode onAddNew=(action "addTask") cancelAction=(action (mut addNewTaskMode) (not addNewTaskMode)) saveButtonLabel="Add task"}}
+      {{task-list/item groupId=model.groupId addNewMode=addNewTaskMode onAddNew=(action "addTask") 
+      cancelAction=(action (mut addNewTaskMode) (not addNewTaskMode)) saveButtonLabel="Add task"}}
     {{else}}
       <div {{action (mut addNewTaskMode) (not addNewTaskMode)}} class="task-board-add-task">+ Add Task</div>
     {{/if}}

@@ -1,16 +1,18 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  router: Ember.inject.service('-routing'),
   timeManager: Ember.inject.service(),
+  groupManager: Ember.inject.service(),
 
   classNames: ['left-bar-wrapper', 'flex-30'],
+
+  selectedTab: 0,
+  isAddGroupFormVisible: false,
 
   todayInMs: Ember.computed(function () {
     return this.get('timeManager').getTodayMidnightMs();
   }),
-
-  selectedTab: 0,
-  addNewGroup: false,
 
   filters: Ember.computed(function () {
     return [{
@@ -18,10 +20,7 @@ export default Ember.Component.extend({
       icon: 'Inbox',
       tagName: 'li',
       className: 'left-bar-filter-item',
-      link: 'index.task-board',
-      queryParams: {
-        relatedToGroup: false
-      }
+      link: 'index.task-board'
     },
     {
       label: 'Today',
@@ -75,5 +74,37 @@ export default Ember.Component.extend({
         }
       }]
     }];
-  })
+  }),
+
+  actions: {
+    addGroup(title) {
+      return this.get('groupManager').addOne(title)
+        .then(() => this.set('isAddGroupFormVisible', false))
+    },
+
+    saveGroup({ id, title }) {
+      return this.get('groupManager').save(id, { title })
+        .then(() => this.set('isAddGroupFormVisible', false))
+    },
+
+    confirmDelete({ id, title }) {
+      this.setProperties({
+        groupIdToDelete: id,
+        groupTitleToDelete: title,
+        isConfirmDialogVisible: true
+      });
+    },
+
+    cancelDelete() {
+      this.setProperties({ groupIdToDelete: '', groupTitleToDelete: '', isConfirmDialogVisible: false });
+    },
+
+    deleteGroup() {
+      const id = this.get('groupIdToDelete');
+
+      return this.get('groupManager').delete(id)
+        .then(() => this.setProperties({ groupIdToDelete: '', groupTitleToDelete: '', isConfirmDialogVisible: false }))
+        .then(() => this.get('router').transitionTo('index'));
+    }
+  }
 });

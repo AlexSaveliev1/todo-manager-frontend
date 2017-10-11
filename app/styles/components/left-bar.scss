@@ -1,6 +1,9 @@
 @import '../variables';
 
 .left-bar-wrapper {
+  // max-height: 420px;
+  // overflow-y: auto; TODO: Overflow
+
   padding-top: 30px;
   padding-right: 20px;
 
@@ -32,7 +35,9 @@
     }
 
     .left-bar-group-item-wrapper {
-      .left-bar-menu-group-item {
+      min-height: 45px;
+
+      .left-bar-menu-group-item { // TODO: refactor to seperate files
         min-height: 42px;
         display: block;
         box-sizing: border-box;
@@ -48,7 +53,13 @@
         }
 
         &.active {
+          background-color: $white;
+          border-bottom: 2px solid #e91e63;
           font-weight: $medium-font-weight;
+        }
+
+        .left-bar-group-item-edit-wrapper {
+          margin-right: 5px;
         }
       }
 
@@ -67,8 +78,10 @@
     .left-bar-add-group {
       color: #DB4C3F; // TODO: change color according to design
       font-size: 15px;
-      margin-top: 10px;
       cursor: pointer;
+
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
 
     .left-bar-menu-tabs {

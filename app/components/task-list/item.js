@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   tagName: 'li',
 
   id: '',
+  groupId: '',
   title: '',
   dueDate: '',
   dueDateToChange: '', // TODO: make min date of current day
@@ -47,7 +48,14 @@ export default Ember.Component.extend({
 
   actions: {
     cancel() {
-      this.get('cancelAction') ? this.sendAction('cancelAction') : this.set('editMode', !this.editMode);
+      this.get('cancelAction') ? this.sendAction('cancelAction') : this.set('editMode', !this.editMode); // TODO: Think about cancelAction
+    },
+
+    cancelEdit() {
+      const titleToChange = this.get('title'),
+        dueDateToChange = this.get('dueDate');
+
+      this.setProperties({ titleToChange, dueDateToChange, editMode: false });
     },
 
     save() {

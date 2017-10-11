@@ -41,14 +41,13 @@ export default Ember.Controller.extend({
         .then(() => this.setProperties({ taskIdToDelete: '', taskTitleToDelete: '', isConfirmDialogVisible: false }));
     },
 
-    addTask({ title, dueDate, createdAt }) {
-      this.get('taskManager').addOne({ title, dueDate, createdAt })
+    addTask(properties) {
+      this.get('taskManager').addOne(properties)
         .then(() => this.set('addNewTaskMode', false));
     },
 
     changePriority({ id, value }) {
       this.get('taskManager').save(id, { priority: value });
     }
-
   }
 });

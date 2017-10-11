@@ -22,23 +22,30 @@
   {{/paper-tabs}}
 
   {{#liquid-bind (hash tab=selectedTab.index m=selectedTab) class="md-padding dynamic-animation" as |current|}}
-    {{#if current.m.groups}}
+    {{#if (eq current.m.title "Groups")}}
       {{#each current.m.groups as |group|}}
-        {{left-bar/group-item title=group.title
+        {{left-bar/group-item itemId=group.id title=group.title onSave=(action "saveGroup") onDelete=(action "confirmDelete")
           link=group.link queryParam=group.id className="left-bar-menu-group-item"}}
       {{/each}}
 
-      {{#if addNewGroup}}
-        {{left-bar/group-item addNewMode=true className="left-bar-menu-group-item"}}
+      {{#if isAddGroupFormVisible}}
+        {{left-bar/group-item addNewMode=true onAdd=(action "addGroup") onCancel=(action (mut isAddGroupFormVisible) false) className="left-bar-menu-group-item"}}
       {{else}}
-        <div {{action (mut addNewGroup) (not addNewGroup)}} class="left-bar-add-group layout-row layout-align-center">+ Add Group</div>
+        <div {{action (mut isAddGroupFormVisible) (not isAddGroupFormVisible)}} class="left-bar-add-group layout-row layout-align-center">+ Add Group</div>
       {{/if}}
+    {{/if}}
 
-    {{else}}
+    {{#if (eq current.m.title "Filters")}}
       {{#each current.m.filters as |filter|}}
         {{left-bar/filter-item title=filter.title
         link=filter.link queryParams=filter.queryParams}}
       {{/each}}
     {{/if}}
   {{/liquid-bind}}
+
+  {{#if isConfirmDialogVisible}}
+    {{confirm-dialog onConfirm=(action "deleteGroup") onCancel=(action "cancelDelete")
+      fullscreen="true" clickOutsideToClose="true" title="Confirm delete" confirmButtonLabel="Delete"
+      question=(concat "Are you sure you want to delete '" groupTitleToDelete "' ?")}}
+  {{/if}}
 </aside>
