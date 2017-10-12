@@ -1,36 +1,36 @@
 {{#if addNewMode}}
-  {{#paper-form class="left-bar-group-item-add-new-form" onSubmit=(action "addNew") as |form|}}
+  {{#paper-form class="left-bar-group-item-form" onSubmit=(action "addNew") as |form|}}
     <div class="layout-row layout-align-space-between">
       {{form.input onChange=(action (mut titleToChange)) label="e.g. Projects / Home" value=titleToChange class="left-bar-group-item-input"}}
     </div>
       
     <div class="layout-row">
-      {{#form.submit-button primary=true class="task-list-item-button"}}Add{{/form.submit-button}}
-      {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+      {{#form.submit-button primary=true}}Add{{/form.submit-button}}
+      {{#paper-button onClick=(action "cancel") warn=true}}Cancel{{/paper-button}}
     </div>
   {{/paper-form}}
 {{else if editMode}}
-   {{#paper-form class="left-bar-group-item-add-new-form" onSubmit=(action "save") as |form|}}
+   {{#paper-form class="left-bar-group-item-form" onSubmit=(action "save") as |form|}}
     <div class="layout-row layout-align-space-between">
       {{form.input onChange=(action (mut titleToChange)) label="e.g. Projects / Home" value=titleToChange class="left-bar-group-item-input"}}
     </div>
       
     <div class="layout-row">
-      {{#form.submit-button primary=true class="task-list-item-button"}}Save{{/form.submit-button}}
-      {{#paper-button onClick=(action "cancelEdit") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
+      {{#form.submit-button primary=true}}Save{{/form.submit-button}}
+      {{#paper-button onClick=(action "cancelEdit") warn=true}}Cancel{{/paper-button}}
     </div>
   {{/paper-form}}
 {{else}}
   {{#link-to 'index.task-board' title (query-params groupId=queryParam) tag=tagName class=className}}
-    <div class="layout-row layout-align-space-between-center">
+    <div class="left-bar-group-item-content layout-row layout-align-space-between-center">
       <div>{{title}}</div>
-      <div class="layout-row">
-        <div {{action (mut editMode) (not editMode)}} class="left-bar-group-item-edit-wrapper">
-          {{paper-icon "mode-edit" size=22 class="task-list-item-edit-icon"}}
+      <div class="left-bar-group-item-action-buttons layout-row">
+        <div {{action (mut editMode) (not editMode)}} class="left-bar-group-item-edit-icon-wrapper">
+          {{paper-icon "mode-edit" size=22 class="left-bar-group-item-edit-icon"}}
         </div>
 
-        <div {{action "delete"}} class="task-list-item-edit-icon-wrapper">
-          {{paper-icon "delete" size=22 class="task-list-item-edit-icon"}}
+        <div {{action "delete"}} class="left-bar-group-item-delete-icon-wrapper">
+          {{paper-icon "delete" size=22 class="left-bar-group-item-delete-icon"}}
         </div>
       </div>
     </div>

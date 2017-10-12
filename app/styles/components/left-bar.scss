@@ -37,7 +37,7 @@
     .left-bar-group-item-wrapper {
       min-height: 45px;
 
-      .left-bar-menu-group-item { // TODO: refactor to seperate files
+      .left-bar-menu-group-item {
         min-height: 42px;
         display: block;
         box-sizing: border-box;
@@ -46,6 +46,10 @@
         text-decoration: none;
         padding: 10px 15px;
         margin-bottom: 3px;
+
+        .left-bar-group-item-content {
+          min-height: 25px;
+        }
 
         &:hover {
           background-color: $white;
@@ -58,25 +62,45 @@
           font-weight: $medium-font-weight;
         }
 
-        .left-bar-group-item-edit-wrapper {
-          margin-right: 5px;
+        .left-bar-group-item-action-buttons {
+          .left-bar-group-item-edit-icon-wrapper, .left-bar-group-item-delete-icon-wrapper {
+            display: none;
+
+            .left-bar-group-item-edit-icon, .left-bar-group-item-delete-icon {
+              &:hover {
+                color: $black;
+              }
+            }
+          }
+
+          .left-bar-group-item-edit-icon-wrapper {
+            margin-right: 5px;
+          }
         }
       }
 
-      .left-bar-group-item-add-new-form {
+      .left-bar-group-item-form {
         padding-left: 15px;
         padding-right: 15px;
       }
+
       .left-bar-group-item-input {
         width: 100%;
         font-size: 15px;
-        // padding: 10px;
         margin-bottom: 0;
+      }
+
+      &:hover {
+        .left-bar-group-item-action-buttons { 
+          .left-bar-group-item-edit-icon-wrapper, .left-bar-group-item-delete-icon-wrapper {
+            display: block;
+          }
+        }
       }
     }
 
-    .left-bar-add-group {
-      color: #DB4C3F; // TODO: change color according to design
+    .left-bar-add-group-button {
+      color: $dark-orange;
       font-size: 15px;
       cursor: pointer;
 

@@ -3,7 +3,7 @@
     {{#paper-form onSubmit=(action "save") as |form|}}
       <div class="layout-row layout-align-space-between">
         {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
-        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="2017, 2020" format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange=datePickerYearRange format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
       </div>
       
       <div class="layout-row">
@@ -16,7 +16,7 @@
     {{#paper-form onSubmit=(action "addNew") as |form|}}
       <div class="layout-row layout-align-space-between">
         {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
-        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="2017, 2020" format="MMM D" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="currentYear, 2020" format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
       </div>
       
       <div class="layout-row">

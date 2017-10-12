@@ -11,18 +11,25 @@ export default Ember.Component.extend({
   groupId: '',
   title: '',
   dueDate: '',
-  dueDateToChange: '', // TODO: make min date of current day
+  dueDateToChange: '',
+  datePickerYearRange: Ember.computed(function () {
+    const currentYear = this.get('timeManager').getCurrentYear(),
+      maxYearRange = 3;
+
+    return `${currentYear}, ${currentYear + maxYearRange}`;
+  }),
   editMode: false,
   addNewMode: false,
 
   titleToChange: Ember.computed.reads('title'),
   dueDateObserver: Ember.on('init', Ember.observer('dueDateMs', function () {
     let ms = this.get('dueDateMs'),
-      convertedMsToDate = this.get('timeManager').convertMsToDate(ms, 'MMM D');
+      convertedMsToDate = this.get('timeManager').convertMsToDate(ms, 'MMM D YYYY'),
+      dueDate = this.get('timeManager').convertMsToDate(ms, 'MMM D');
 
     return ms && this.setProperties({
       dueDateToChange: convertedMsToDate,
-      dueDate: convertedMsToDate
+      dueDate
     });
   })),
 
@@ -48,7 +55,7 @@ export default Ember.Component.extend({
 
   actions: {
     cancel() {
-      this.get('cancelAction') ? this.sendAction('cancelAction') : this.set('editMode', !this.editMode); // TODO: Think about cancelAction
+      this.get('cancelAction') && this.sendAction('cancelAction');
     },
 
     cancelEdit() {

@@ -11,5 +11,9 @@ export default Ember.Service.extend({
 
   convertMsToDate(ms, format) {
     return moment(ms).format(format);
+  },
+
+  getCurrentYear() {
+    return moment().year();
   }
 });

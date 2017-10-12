@@ -3,6 +3,15 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
 
+
+  addOne(title) {
+    const newGroup = this.get('store').createRecord('group', {
+      title
+    });
+
+    return newGroup.save();
+  },
+
   save(id, properties) {
     return this.get('store').findRecord('group', id)
       .then(group => {
@@ -25,13 +34,5 @@ export default Ember.Service.extend({
 
   findOne(id) {
     return this.get('store').findRecord('group', id);
-  },
-
-  addOne(title) {
-    const newGroup = this.get('store').createRecord('group', {
-      title
-    });
-
-    return newGroup.save();
   }
 });

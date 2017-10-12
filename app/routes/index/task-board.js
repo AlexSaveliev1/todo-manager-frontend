@@ -15,7 +15,6 @@ export default Ember.Route.extend({
     console.log(queryParams)
     let filter = Object.assign({}, queryParams),
       { groupId, title } = queryParams,
-      groups = this.store.findAll('group'),
       queryFilter,
       tasks;
 
@@ -35,7 +34,7 @@ export default Ember.Route.extend({
         const isDueDateExist = Number(item.get('dueDate')) === Number(queryFilter['dueDate']),
           isPriorityExist = Number(item.get('priority')) === Number(queryFilter['priority']),
           isGroupIdExist = Number(item.get('groupId')) === Number(queryFilter['groupId']),
-          isRangeExist = Number(item.get('from')) === Number(queryFilter['from']);
+          isRangeExist = Number(item.get('dueDate')) >= Number(queryFilter['from']) && Number(item.get('dueDate')) <= Number(queryFilter['to']);
 
         if (isDueDateExist || isPriorityExist || isGroupIdExist || isRangeExist) {
           return item;
@@ -47,7 +46,7 @@ export default Ember.Route.extend({
       groupId,
       boardTitle: title,
       tasks,
-      groups
+      groups: this.store.findAll('group')
     });
   }
 });

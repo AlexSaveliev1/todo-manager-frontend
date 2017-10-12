@@ -11,9 +11,8 @@
   border-right: 1px solid $softGrey;
   border-left: 1px solid $softGrey;
 
-  .task-board-add-task {
-    color: #DB4C3F; // TODO: change color according to design
-    font-size: 16px;
+  .task-board-add-task-button {
+    color: $dark-orange;
     margin-top: 20px;
     cursor: pointer;
   }

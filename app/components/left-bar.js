@@ -1,5 +1,8 @@
 import Ember from 'ember';
 
+const DAYS_IN_WEEK = 7,
+  DATE_AFTER_WEEK = moment().add(DAYS_IN_WEEK, 'd');
+
 export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
   timeManager: Ember.inject.service(),
@@ -9,10 +12,6 @@ export default Ember.Component.extend({
 
   selectedTab: 0,
   isAddGroupFormVisible: false,
-
-  todayInMs: Ember.computed(function () {
-    return this.get('timeManager').getTodayMidnightMs();
-  }),
 
   filters: Ember.computed(function () {
     return [{
@@ -29,7 +28,7 @@ export default Ember.Component.extend({
       className: 'left-bar-filter-item',
       link: 'index.task-board',
       queryParams: {
-        dueDate: this.get('todayInMs')
+        dueDate: this.get('timeManager').getTodayMidnightMs()
       }
     },
     {
@@ -39,8 +38,8 @@ export default Ember.Component.extend({
       className: 'left-bar-filter-item',
       link: 'index.task-board',
       queryParams: {
-        from: 1,
-        to: 2
+        from: this.get('timeManager').getTodayMidnightMs(),
+        to: this.get('timeManager').getMidnightMsOfDate(DATE_AFTER_WEEK)
       }
     }];
   }),
@@ -79,12 +78,12 @@ export default Ember.Component.extend({
   actions: {
     addGroup(title) {
       return this.get('groupManager').addOne(title)
-        .then(() => this.set('isAddGroupFormVisible', false))
+        .then(() => this.set('isAddGroupFormVisible', false));
     },
 
     saveGroup({ id, title }) {
       return this.get('groupManager').save(id, { title })
-        .then(() => this.set('isAddGroupFormVisible', false))
+        .then(() => this.set('isAddGroupFormVisible', false));
     },
 
     confirmDelete({ id, title }) {
