@@ -1,31 +1,28 @@
 import Ember from 'ember';
 
-const DAYS_IN_WEEK = 7,
-  DATE_AFTER_WEEK = moment().add(DAYS_IN_WEEK, 'd');
-
 export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
   timeManager: Ember.inject.service(),
   groupManager: Ember.inject.service(),
 
-  classNames: ['left-bar-wrapper', 'flex-30'],
+  classNames: ['left-bar-wrapper', 'flex-25'],
 
-  selectedTab: 0,
+  // selectedTab: 0,
   isAddGroupFormVisible: false,
-
+  // ${this.get('inboxStatistic.firstObject.total')}
   filters: Ember.computed(function () {
     return [{
       label: 'Inbox',
       icon: 'Inbox',
       tagName: 'li',
-      className: 'left-bar-filter-item',
+      className: 'left-bar-item',
       link: 'index.task-board'
     },
     {
       label: 'Today',
       icon: 'Today',
       tagName: 'li',
-      className: 'left-bar-filter-item',
+      className: 'left-bar-item',
       link: 'index.task-board',
       queryParams: {
         dueDate: this.get('timeManager').getTodayMidnightMs()
@@ -35,11 +32,11 @@ export default Ember.Component.extend({
       label: 'Next 7 days',
       icon: 'schedule',
       tagName: 'li',
-      className: 'left-bar-filter-item',
+      className: 'left-bar-item',
       link: 'index.task-board',
       queryParams: {
         from: this.get('timeManager').getTodayMidnightMs(),
-        to: this.get('timeManager').getMidnightMsOfDate(DATE_AFTER_WEEK)
+        to: this.get('timeManager').getMidnightMsAfterWeek()
       }
     }];
   }),
@@ -47,7 +44,7 @@ export default Ember.Component.extend({
   menuTabs: Ember.computed('model.groups', function () {
     return [{
       title: 'Groups',
-      groups: this.get('groups')
+      groups: this.get('groups').map(group => Object.assign(group, { queryParams: { groupId: group.get('id') } }))
     },
     {
       title: 'Filters',

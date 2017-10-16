@@ -1,6 +1,5 @@
 <div class="task-board-wrapper flex-70">
   <h2>{{model.boardTitle}}</h2>
-  {{log model.tasks}}
   {{#task-list}}
     {{#each tasks as |task|}}
       {{task-list/item id=task.id title=task.title dueDateMs=task.dueDate groupId=task.groupId

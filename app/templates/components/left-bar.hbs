@@ -1,10 +1,12 @@
 <aside class="left-bar-menu">
   <nav>
-    {{#each filters as |filter|}}
-      {{left-bar/filter-item label=filter.label icon=filter.icon
-        link=filter.link title=filter.label queryParams=filter.queryParams
-        tagName=filter.tagName className=filter.className}}
-    {{/each}}
+    <ul class="left-bar-menu-list">
+      {{#each filters as |filter|}}
+        {{left-bar/item label=filter.label titleIcon=filter.icon
+          link=filter.link title=filter.label queryParams=filter.queryParams
+          tagName=filter.tagName className=filter.className}}
+      {{/each}}
+    </ul>
   </nav>
 
   {{#paper-tabs primary=true
@@ -24,14 +26,16 @@
   {{#liquid-bind (hash tab=selectedTab.index m=selectedTab) class="md-padding dynamic-animation" as |current|}}
     {{#if (eq current.m.title "Groups")}}
       <nav>
-        {{#each current.m.groups as |group|}}
-          {{left-bar/group-item itemId=group.id title=group.title onSave=(action "saveGroup") onDelete=(action "confirmDelete")
-            link=group.link queryParam=group.id className="left-bar-menu-group-item"}}
-        {{/each}}
+        <ul class="left-bar-menu-list">
+          {{#each current.m.groups as |group|}}
+            {{left-bar/item itemId=group.id title=group.title onSave=(action "saveGroup") onDelete=(action "confirmDelete")
+              actionsButtons=true link=group.link queryParams=group.queryParams className="left-bar-item"}} 
+          {{/each}}
+        </ul>
       </nav>
 
       {{#if isAddGroupFormVisible}}
-        {{left-bar/group-item addNewMode=true onAdd=(action "addGroup") onCancel=(action (mut isAddGroupFormVisible) false) className="left-bar-menu-group-item"}}
+        {{left-bar/item addNewMode=true onAdd=(action "addGroup") onCancel=(action (mut isAddGroupFormVisible) false) className="left-bar-item"}}
       {{else}}
         <div {{action (mut isAddGroupFormVisible) (not isAddGroupFormVisible)}} class="left-bar-add-group-button layout-row layout-align-center">+ Add Group</div>
       {{/if}}
@@ -39,9 +43,11 @@
     
     {{#if (eq current.m.title "Filters")}}
       <nav>
-        {{#each current.m.filters as |filter|}}
-          {{left-bar/filter-item title=filter.title link=filter.link queryParams=filter.queryParams}}
-        {{/each}}
+        <ul class="left-bar-menu-list">
+          {{#each current.m.filters as |filter|}}
+            {{left-bar/item title=filter.title link=filter.link queryParams=filter.queryParams tagName="li" className="left-bar-item"}}
+          {{/each}}
+        </ul>
       </nav>
     {{/if}}
   {{/liquid-bind}}

@@ -51,7 +51,6 @@
               <span>Edit</span>
             {{/content.menu-item}}
 
-
             {{#each priorityItems as |priorityItem|}}
               {{#content.menu-item onClick=(action "changePriority" priorityItem.value)}}
                 {{paper-icon priorityItem.icon class="md-menu-align-target"}}

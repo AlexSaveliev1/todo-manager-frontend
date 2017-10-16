@@ -3,6 +3,8 @@ import RSVP from 'rsvp';
 import _ from 'lodash';
 
 export default Ember.Route.extend({
+  statisticsManager: Ember.inject.service(),
+
   queryParams: {
     dueDate: { refreshModel: true },
     priority: { refreshModel: true },
@@ -12,7 +14,6 @@ export default Ember.Route.extend({
   },
 
   model(queryParams) {
-    console.log(queryParams)
     let filter = Object.assign({}, queryParams),
       { groupId, title } = queryParams,
       queryFilter,
@@ -43,6 +44,7 @@ export default Ember.Route.extend({
     }
 
     return RSVP.hash({
+      statistic: this.get('statisticsManager').filterByQuery(filter),
       groupId,
       boardTitle: title,
       tasks,

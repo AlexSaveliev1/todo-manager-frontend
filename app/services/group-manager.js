@@ -3,7 +3,6 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   store: Ember.inject.service(),
 
-
   addOne(title) {
     const newGroup = this.get('store').createRecord('group', {
       title

@@ -1,0 +1,16 @@
+{{#paper-dialog fullscreen=fullscreen clickOutsideToClose=true onClose=(action "close") origin=dialogOrigin}}
+  {{#paper-dialog-content}}
+    <h2 class="md-title">Statistics: {{title}}</h2>
+    
+    {{log statistics}}
+    <p>Total: {{statistics.total}}</p>
+    <p>Completed: {{statistics.completed}}</p>
+    <p>Summary estimated time: {{summaryEstimated}}</p>
+    <p>Summary remaining time: {{statistics.summaryRemaining}}</p>
+  {{/paper-dialog-content}}
+
+  {{#paper-dialog-actions class="layout-row"}}
+    <span class="flex"></span>
+    {{#paper-button primary=true onClick=(action "close")}}Okay{{/paper-button}}
+  {{/paper-dialog-actions}}
+{{/paper-dialog}}
