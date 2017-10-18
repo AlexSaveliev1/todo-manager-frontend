@@ -8,7 +8,11 @@ const Router = Ember.Router.extend({
 
 Router.map(function () {
   this.route('index', { path: '/' }, function () {
-    this.route('task-board', { path: '/:title' });
+    this.route('inbox');
+    this.route('today');
+    this.route('week');
+    this.route('filters', { path: 'filters/:priority' });
+    this.route('groups', { path: 'groups/:id' });
   });
 });
 

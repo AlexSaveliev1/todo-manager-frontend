@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:index/task-board', 'Unit | Route | index/task board', {
+moduleFor('route:index/week', 'Unit | Route | index/week', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

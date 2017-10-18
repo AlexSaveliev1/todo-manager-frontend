@@ -3,13 +3,12 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['left-bar-item-wrapper'],
 
-  itemId: '',
-  title: '',
+  item: {},
+  newTitle: '',
   statisticsModalVisible: false,
+  isDeleteConfirmationDialogVisible: false,
   editMode: false,
   addNewMode: false,
-
-  titleToChange: Ember.computed.reads('title'),
 
   actions: {
     showStatisticsModal(event) {
@@ -22,20 +21,18 @@ export default Ember.Component.extend({
     },
 
     addNew() {
-      const title = this.get('titleToChange');
+      const title = this.get('newTitle');
 
       if (!title) {
         return;
       }
 
       this.sendAction('onAdd', title);
+      this.set('newTitle', '');
     },
 
     delete() {
-      const id = this.get('itemId'),
-        title = this.get('title');
-
-      this.sendAction('onDelete', { id, title });
+      this.sendAction('onDelete', this.get('item'));
     },
 
     cancel() {
@@ -43,21 +40,19 @@ export default Ember.Component.extend({
     },
 
     cancelEdit() {
-      const title = this.get('title');
+      const item = this.get('item');
 
-      this.setProperties({ titleToChange: title, editMode: false });
+      item.rollbackAttributes();
+      this.set('editMode', false);
     },
 
     save() {
-      const title = this.get('titleToChange'),
-        id = this.get('itemId');
+      this.sendAction('onSave', this.get('item'));
+      this.set('editMode', false);
+    },
 
-      if (!title) {
-        return;
-      }
-
-      this.sendAction('onSave', { id, title });
-      this.setProperties({ title, editMode: false });
+    showDeleteConfirmationDialog() {
+      this.set('isDeleteConfirmationDialogVisible', true);
     }
   }
 });

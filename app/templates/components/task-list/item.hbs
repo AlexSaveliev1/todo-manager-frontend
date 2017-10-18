@@ -2,7 +2,7 @@
   {{#if editMode}}
     {{#paper-form onSubmit=(action "save") as |form|}}
       <div class="layout-row layout-align-space-between">
-        {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
+        {{form.input onChange=(action (mut item.title)) label="e.g. Wash car on 7 November" value=item.title class="task-list-item-input flex-75"}}
         {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange=datePickerYearRange format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
       </div>
       
@@ -58,12 +58,12 @@
               {{/content.menu-item}}
             {{/each}}
             
-            {{#content.menu-item onClick=(action "delete")}}
+            {{#content.menu-item onClick=(action (mut isDeleteConfirmationDialogVisible) true)}}
               {{paper-icon "delete" class="md-menu-align-target"}}
               <span>Delete</span>
             {{/content.menu-item}}
 
-            {{#content.menu-item onClick=(action "delete")}}
+            {{#content.menu-item }}
               {{paper-icon "note-add" class="md-menu-align-target"}}
               <span>Add subtask</span>
             {{/content.menu-item}}
@@ -74,3 +74,9 @@
    </div>
   {{/if}}
 </div>
+
+{{#if isDeleteConfirmationDialogVisible}}
+  {{confirm-dialog onConfirm=(action "delete") onCancel=(action (mut isDeleteConfirmationDialogVisible) false)
+    fullscreen="true" clickOutsideToClose="true" title="Confirm delete" confirmButtonLabel="Delete"
+    question=(concat "Are you sure you want to delete '" item.title "' ?")}}
+{{/if}}

@@ -20,6 +20,7 @@ export default Ember.Component.extend({
   }),
   editMode: false,
   addNewMode: false,
+  isDeleteConfirmationDialogVisible: false,
 
   titleToChange: Ember.computed.reads('title'),
   dueDateObserver: Ember.on('init', Ember.observer('dueDateMs', function () {
@@ -54,61 +55,52 @@ export default Ember.Component.extend({
   }),
 
   actions: {
+    save() {
+      const { item, dueDateToChange } = this.getProperties('item', 'dueDateToChange');
+
+      if (!item.title) {
+        return;
+      }
+
+      item.setProperties({
+        dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
+        updatedAt: this.get('timeManager').getTodayMidnightMs()
+      });
+
+      this.sendAction('onSave', item);
+      this.set('editMode', false);
+    },
+
+    cancelEdit() {
+      this.get('item').rollbackAttributes();
+      this.set('editMode', false);
+    },
+
+    addNew() {
+      const { dueDateToChange, titleToChange } = this.getProperties('dueDateToChange', 'titleToChange'),
+        newItem = {
+          title: titleToChange,
+          groupId: this.get('groupId'),
+          dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
+          createdAt: this.get('timeManager').getTodayMidnightMs()
+        };
+
+      titleToChange && this.sendAction('onAddNew', newItem);
+    },
+
     cancel() {
       this.get('cancelAction') && this.sendAction('cancelAction');
     },
 
-    cancelEdit() {
-      const titleToChange = this.get('title'),
-        dueDateToChange = this.get('dueDate');
-
-      this.setProperties({ titleToChange, dueDateToChange, editMode: false });
-    },
-
-    save() {
-      const { id, titleToChange, dueDateToChange } = this.getProperties('id', 'titleToChange', 'dueDateToChange');
-
-      if (!titleToChange) {
-        return;
-      }
-
-      let updatedItem = {
-        id,
-        titleToChange,
-        dueDateToChange: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
-        updatedAt: this.get('timeManager').getTodayMidnightMs()
-      };
-
-      this.setProperties({ title: titleToChange, dueDate: dueDateToChange, editMode: false });
-      this.sendAction('onSave', updatedItem);
-    },
-
-    addNew() {
-      const title = this.get('titleToChange'),
-        dueDate = this.get('dueDateToChange'),
-        groupId = this.get('groupId'),
-        newItem = {
-          title,
-          groupId,
-          dueDate: this.get('timeManager').getMidnightMsOfDate(dueDate),
-          createdAt: this.get('timeManager').getTodayMidnightMs()
-        };
-
-      title && this.sendAction('onAddNew', newItem);
-    },
-
     changePriority(value) {
-      const id = this.get('id');
+      const item = this.get('item');
 
-      this.sendAction('onChangePriority', { id, value });
+      this.sendAction('onChangePriority', item, value);
     },
 
     delete() {
-      this.sendAction('onDelete', {
-        id: this.get('id'),
-        groupId: this.get('groupId'),
-        title: this.get('title')
-      });
+      this.sendAction('onDelete', this.get('item'));
+      this.set('isDeleteConfirmationDialogVisible', false);
     }
   }
 });

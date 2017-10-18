@@ -1,7 +1,7 @@
 {{#if addNewMode}}
   {{#paper-form class="left-bar-item-form" onSubmit=(action "addNew") as |form|}}
     <div class="layout-row layout-align-space-between">
-      {{form.input onChange=(action (mut titleToChange)) label="e.g. Projects / Home" value=titleToChange class="left-bar-item-input"}}
+      {{form.input onChange=(action (mut newTitle)) label="e.g. Projects / Home" value=newTitle class="left-bar-item-input"}}
     </div>
     <div class="layout-row">
       {{#form.submit-button primary=true}}Add{{/form.submit-button}}
@@ -11,7 +11,7 @@
 {{else if editMode}}
   {{#paper-form class="left-bar-item-edit-form" onSubmit=(action "save") as |form|}}
     <div class="layout-row layout-align-space-between">
-      {{form.input onChange=(action (mut titleToChange)) label="e.g. Projects / Home" value=titleToChange class="left-bar-item-edit-input"}}
+      {{form.input onChange=(action (mut item.title)) label="e.g. Projects / Home" value=item.title class="left-bar-item-edit-input"}}
     </div>
     <div class="layout-row">
       {{#form.submit-button primary=true}}Save{{/form.submit-button}}
@@ -19,37 +19,59 @@
     </div>
   {{/paper-form}}
 {{else}}
-  {{#link-to 'index.task-board' title (qp-parser queryParams) tag=tagName class=className}}
-    <div class="left-bar-item-content layout-row layout-align-space-between-center">
-      <div class="layout-row layout-align-center-center">
-        {{#if titleIcon}}
-          {{paper-icon titleIcon size=24 class="left-bar-item-title-icon"}}
-        {{/if}}
-        <div>{{title}}</div>
-      </div>
-      <div class="left-bar-item-icons layout-row">
-        <div onClick={{action "showStatisticsModal"}}>
-          {{paper-icon "info" size=22 class="left-bar-item-icon"}}
+  {{#if param}}
+    {{#link-to link param tag=tagName class=className}}
+      <div class="left-bar-item-content layout-row layout-align-space-between-center">
+        <div class="layout-row layout-align-center-center">
+          {{#if titleIcon}}
+            {{paper-icon titleIcon size=24 class="left-bar-item-title-icon"}}
+          {{/if}}
+          <div>{{title}}</div>
         </div>
-        
-        {{#if actionsButtons}}
-          <div class="left-bar-group-item-actions-buttons layout-row">
-            <div {{action (mut editMode) (not editMode)}} class="left-bar-group-item-edit-icon-wrapper">
-              {{paper-icon "mode-edit" size=22 class="left-bar-item-icon"}}
-            </div>
-            <div {{action "delete"}} class="left-bar-group-item-delete-icon-wrapper">
-              {{paper-icon "delete" size=22 class="left-bar-item-icon"}}
-            </div>
+        <div class="left-bar-item-icons layout-row">
+          <div onClick={{action "showStatisticsModal"}}>
+            {{paper-icon "info" size=22 class="left-bar-item-icon"}}
           </div>
-        {{/if}}
+          
+          {{#if actionsButtons}}
+            <div class="left-bar-group-item-actions-buttons layout-row">
+              <div {{action (mut editMode) (not editMode)}} class="left-bar-group-item-edit-icon-wrapper">
+                {{paper-icon "mode-edit" size=22 class="left-bar-item-icon"}}
+              </div>
+              <div {{action "showDeleteConfirmationDialog"}} class="left-bar-group-item-delete-icon-wrapper">
+                {{paper-icon "delete" size=22 class="left-bar-item-icon"}}
+              </div>
+            </div>
+          {{/if}}
+        </div>
       </div>
-      
-    </div>
-  {{/link-to}}
+    {{/link-to}}
+  {{else}}
+    {{#link-to link tag=tagName class=className}}
+      <div class="left-bar-item-content layout-row layout-align-space-between-center">
+        <div class="layout-row layout-align-center-center">
+          {{#if titleIcon}}
+            {{paper-icon titleIcon size=24 class="left-bar-item-title-icon"}}
+          {{/if}}
+          <div>{{title}}</div>
+        </div>
+        <div class="left-bar-item-icons layout-row">
+          <div onClick={{action "showStatisticsModal"}}>
+            {{paper-icon "info" size=22 class="left-bar-item-icon"}}
+          </div>
+        </div>
+      </div>
+    {{/link-to}}
+  {{/if}}
 {{/if}}
 
 {{#if statisticsModalVisible}}
   {{statistics-modal title=title queryParams=queryParams onClose=(action (mut statisticsModalVisible) false)}}
 {{/if}}
 
+{{#if isDeleteConfirmationDialogVisible}}
+  {{confirm-dialog onConfirm=(action "delete") onCancel=(action (mut isDeleteConfirmationDialogVisible) false)
+    fullscreen="true" clickOutsideToClose="true" title="Confirm delete" confirmButtonLabel="Delete"
+    question=(concat "Are you sure you want to delete group '" groupTitleToDelete "' ?")}}
+{{/if}}
 

@@ -6,11 +6,11 @@
 
 // routes
 @import 'routes/index';
-@import 'routes/task-board';
 
 // components
 @import 'components/header-bar';
 @import 'components/left-bar';
 @import 'components/task-list';
 @import 'components/task-list/item';
+@import 'components/task-board';
 

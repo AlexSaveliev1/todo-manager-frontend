@@ -2,11 +2,11 @@
 
 .dashboard-wrapper {
   min-height: 100vh;
-  background-color: $generalBackgroundColor;
+  background-color: $general-background-color;
 
   .dashboard-container {
     // width: 75%;
     width: 1150px;
-    height: calc(100% - #{$headerHeight})
+    height: calc(100% - #{$header-height})
   }
 }
