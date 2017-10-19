@@ -3,7 +3,9 @@
     {{#paper-form onSubmit=(action "save") as |form|}}
       <div class="layout-row layout-align-space-between">
         {{form.input onChange=(action (mut item.title)) label="e.g. Wash car on 7 November" value=item.title class="task-list-item-input flex-75"}}
-        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange=datePickerYearRange format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{#if dueDateAvailable}}
+          {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange=datePickerYearRange format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{/if}}
       </div>
       
       <div class="layout-row">
@@ -16,11 +18,13 @@
     {{#paper-form onSubmit=(action "addNew") as |form|}}
       <div class="layout-row layout-align-space-between">
         {{form.input onChange=(action (mut titleToChange)) label="e.g. Wash car on 7 November" value=titleToChange class="task-list-item-input flex-75"}}
-        {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="currentYear, 2020" format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{#if dueDateAvailable}}
+          {{pikaday-input onSelection=(action (mut dueDateToChange)) yearRange="currentYear, 2020" format="MMM DD YYYY" value=dueDateToChange placeholder="Due date" class="task-list-item-datepicker"}}
+        {{/if}}
       </div>
       
       <div class="layout-row">
-        {{#form.submit-button primary=true class="task-list-item-button"}}Add new task{{/form.submit-button}}
+        {{#form.submit-button primary=true class="task-list-item-button"}}{{addButtonLabel}}{{/form.submit-button}}
         {{#paper-button onClick=(action "cancel") warn=true class="task-list-item-button"}}Cancel{{/paper-button}}
       </div>
     {{/paper-form}}
@@ -30,7 +34,11 @@
       {{paper-radio toggle=true value="Toggable" groupValue=toggleValue
         onChange=(action (mut toggleValue)) class="task-list-item-radio"}}
       <div class="task-list-item-value layout-row layout-align-center-center">
-        <div>{{title}}</div>
+        {{#unless subtask}}
+          {{#link-to "index.task" item.id}}{{title}}{{/link-to}}
+        {{else}}
+          {{title}}
+        {{/unless}}
         <div {{action (mut editMode) (not editMode)}} class="task-list-item-edit-icon-wrapper">
           {{paper-icon "mode-edit" size=24 class="task-list-item-edit-icon"}}
         </div>
@@ -51,21 +59,18 @@
               <span>Edit</span>
             {{/content.menu-item}}
 
-            {{#each priorityItems as |priorityItem|}}
-              {{#content.menu-item onClick=(action "changePriority" priorityItem.value)}}
-                {{paper-icon priorityItem.icon class="md-menu-align-target"}}
-                <span>{{priorityItem.title}}</span>
-              {{/content.menu-item}}
-            {{/each}}
+            {{#unless subtask}}
+              {{#each priorityItems as |priorityItem|}}
+                {{#content.menu-item onClick=(action "changePriority" priorityItem.value)}}
+                  {{paper-icon priorityItem.icon class="md-menu-align-target"}}
+                  <span>{{priorityItem.title}}</span>
+                {{/content.menu-item}}
+              {{/each}}
+            {{/unless}}
             
             {{#content.menu-item onClick=(action (mut isDeleteConfirmationDialogVisible) true)}}
               {{paper-icon "delete" class="md-menu-align-target"}}
               <span>Delete</span>
-            {{/content.menu-item}}
-
-            {{#content.menu-item }}
-              {{paper-icon "note-add" class="md-menu-align-target"}}
-              <span>Add subtask</span>
             {{/content.menu-item}}
 
           {{/menu.content}}

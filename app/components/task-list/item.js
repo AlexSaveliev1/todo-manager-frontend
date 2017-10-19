@@ -2,14 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   timeManager: Ember.inject.service(),
+  router: Ember.inject.service('-routing'),
 
   classNames: ['task-list-item-wrapper'],
   classNameBindings: ['addNewMode:no-border'],
   tagName: 'li',
 
-  id: '',
+  taskId: '',
   groupId: '',
   title: '',
+  addButtonLabel: 'Add new task',
   dueDate: '',
   dueDateToChange: '',
   datePickerYearRange: Ember.computed(function () {
@@ -18,6 +20,8 @@ export default Ember.Component.extend({
 
     return `${currentYear}, ${currentYear + maxYearRange}`;
   }),
+  dueDateAvailable: true,
+  subtask: false,
   editMode: false,
   addNewMode: false,
   isDeleteConfirmationDialogVisible: false,
@@ -64,7 +68,7 @@ export default Ember.Component.extend({
 
       item.setProperties({
         dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
-        updatedAt: this.get('timeManager').getTodayMidnightMs()
+        updatedAt: this.get('timeManager').now()
       });
 
       this.sendAction('onSave', item);
@@ -77,13 +81,17 @@ export default Ember.Component.extend({
     },
 
     addNew() {
-      const { dueDateToChange, titleToChange } = this.getProperties('dueDateToChange', 'titleToChange'),
+      const { dueDateToChange, titleToChange, subtask, taskId } = this.getProperties('dueDateToChange', 'titleToChange', 'subtask', 'taskId'),
         newItem = {
           title: titleToChange,
-          groupId: this.get('groupId'),
+          group: this.get('groupId'),
           dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
           createdAt: this.get('timeManager').getTodayMidnightMs()
         };
+
+      if (subtask) {
+        newItem.task = taskId;
+      }
 
       titleToChange && this.sendAction('onAddNew', newItem);
     },

@@ -1,19 +1,19 @@
 {{#if addNewMode}}
   {{#paper-form class="left-bar-item-form" onSubmit=(action "addNew") as |form|}}
-    <div class="layout-row layout-align-space-between">
+    <div class="layout-row layout-align-center">
       {{form.input onChange=(action (mut newTitle)) label="e.g. Projects / Home" value=newTitle class="left-bar-item-input"}}
     </div>
-    <div class="layout-row">
+    <div class="layout-row layout-align-center">
       {{#form.submit-button primary=true}}Add{{/form.submit-button}}
       {{#paper-button onClick=(action "cancel") warn=true}}Cancel{{/paper-button}}
     </div>
   {{/paper-form}}
 {{else if editMode}}
   {{#paper-form class="left-bar-item-edit-form" onSubmit=(action "save") as |form|}}
-    <div class="layout-row layout-align-space-between">
+    <div class="layout-row layout-align-center">
       {{form.input onChange=(action (mut item.title)) label="e.g. Projects / Home" value=item.title class="left-bar-item-edit-input"}}
     </div>
-    <div class="layout-row">
+    <div class="layout-row layout-align-center">
       {{#form.submit-button primary=true}}Save{{/form.submit-button}}
       {{#paper-button onClick=(action "cancelEdit") warn=true}}Cancel{{/paper-button}}
     </div>

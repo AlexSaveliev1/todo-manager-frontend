@@ -1,0 +1,31 @@
+@import '../variables';
+
+.task-overview-wrapper {
+  @extend .task-board-wrapper;
+
+  min-height: 500px;
+  border-bottom: 1px solid $soft-grey;
+  
+  .task-overview-completed {
+    margin-top: 20px;
+  }
+
+  .task-overview-subtasks-list-wrapper {
+    padding-bottom: 20px;
+    border-bottom: 1px solid $soft-grey;
+
+    .task-overview-subtask-list {
+      padding-left: 15px;
+  
+      .task-list-item-wrapper {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+  
+
+  .task-overview-add-subtask-button {
+    @extend .task-board-add-task-button
+  }
+}

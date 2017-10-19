@@ -13,6 +13,7 @@ Router.map(function () {
     this.route('week');
     this.route('filters', { path: 'filters/:priority' });
     this.route('groups', { path: 'groups/:id' });
+    this.route('task', { path: 'task/:id' });
   });
 });
 

@@ -1,0 +1,28 @@
+<h2>{{title}}</h2>
+
+<div class="task-overview-completed">
+  
+  {{#if task.finishedAt}}
+    <span>Forgot to do one thing</span>
+    {{#paper-button primary=true onClick=(action "markAsUncompleted")}}Uncomplete{{/paper-button}}
+  {{else}}
+    <span>I have been already complete this task</span>
+    {{#paper-button primary=true onClick=(action "markAsCompleted")}}Mark as completed{{/paper-button}}
+  {{/if}}
+</div>
+
+<div class="task-overview-subtasks-list-wrapper">
+  <h4>Subtasks:</h4>
+  <div class="task-overview-subtask-list flex-75">
+    {{#each subtasks as |subtask|}}
+      {{task-list/item title=subtask.title dueDateAvailable=false item=subtask onSave=(action "saveSubtask") onDelete=(action "deleteSubtask")
+        subtask=true taskId=task.id addButtonLabel="Add subtask"}}
+    {{/each}}
+    {{#if addNewSubtaskMode}}
+      {{task-list/item onAddNew=(action "addSubtask") addNewMode=addNewSubtaskMode dueDateAvailable=false
+        subtask=true taskId=task.id cancelAction=(action (mut addNewSubtaskMode) (not addNewSubtaskMode)) addButtonLabel="Add subtask"}}
+    {{else}}
+      <div {{action (mut addNewSubtaskMode) (not addNewSubtaskMode)}} class="task-overview-add-subtask-button">+ Add subtask</div>
+    {{/if}}
+  </div>
+</div>

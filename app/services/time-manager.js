@@ -22,5 +22,9 @@ export default Ember.Service.extend({
 
   getMidnightMsAfterWeek() {
     return this.getMidnightMsOfDate(DATE_AFTER_WEEK);
+  },
+
+  now() {
+    return moment().valueOf();
   }
 });

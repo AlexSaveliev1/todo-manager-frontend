@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   store: Ember.inject.service(),
+  timeManager: Ember.inject.service(),
 
   classNames: ['task-board-wrapper', 'flex-75'],
 
@@ -27,7 +28,11 @@ export default Ember.Component.extend({
     },
 
     changePriority(item, priority) {
-      item.set('priority', priority);
+      item.setProperties({
+        priority,
+        updatedAt: this.get('timeManager').now()
+      });
+
       item.save();
     }
   }
