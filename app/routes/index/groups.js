@@ -2,8 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model(params) {
+    const { id } = params;
+
     return {
-      tasks: this.store.peekAll('task').filter(task => task.get('groupId') === Number(params.id))
+      group: this.store.peekRecord('group', id),
+      tasks: this.store.peekAll('task').filter(task => task.get('group') === Number(id))
     };
   }
 });

@@ -1,7 +1,6 @@
 <h2>{{title}}</h2>
 
 <div class="task-overview-completed">
-  
   {{#if task.finishedAt}}
     <span>Forgot to do one thing</span>
     {{#paper-button primary=true onClick=(action "markAsUncompleted")}}Uncomplete{{/paper-button}}
@@ -11,13 +10,24 @@
   {{/if}}
 </div>
 
-<div class="task-overview-subtasks-list-wrapper">
+<div class="task-overview-content-wrapper">
+  <h4 class="task-overview-time-tracking-title">Time tracking:</h4>
+  <div class="task-overview-time-tracking">
+    <div>Estimated time: {{estimatedTime}}</div>
+    <div>Spent time: {{spentTime}}</div>
+    <div>Remaining time: {{remainingTime}}</div>
+  </div>
+</div>
+
+<div class="task-overview-content-wrapper">
   <h4>Subtasks:</h4>
   <div class="task-overview-subtask-list flex-75">
-    {{#each subtasks as |subtask|}}
-      {{task-list/item title=subtask.title dueDateAvailable=false item=subtask onSave=(action "saveSubtask") onDelete=(action "deleteSubtask")
-        subtask=true taskId=task.id addButtonLabel="Add subtask"}}
-    {{/each}}
+    {{#task-list}}
+      {{#each subtasks as |subtask|}}
+        {{task-list/item title=subtask.title dueDateAvailable=false item=subtask onSave=(action "saveSubtask") onDelete=(action "deleteSubtask")
+          subtask=true taskId=task.id addButtonLabel="Add subtask"}}
+      {{/each}}
+    {{/task-list}}
     {{#if addNewSubtaskMode}}
       {{task-list/item onAddNew=(action "addSubtask") addNewMode=addNewSubtaskMode dueDateAvailable=false
         subtask=true taskId=task.id cancelAction=(action (mut addNewSubtaskMode) (not addNewSubtaskMode)) addButtonLabel="Add subtask"}}

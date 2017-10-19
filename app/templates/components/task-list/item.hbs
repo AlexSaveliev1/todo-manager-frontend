@@ -46,27 +46,42 @@
       
       <div class="layout-row layout-align-center-center margin-left-auto">
         <div class="task-list-item-duedate">{{dueDate}}</div>
-        {{#paper-menu as |menu|}}
-          {{#menu.trigger}}
-            {{#paper-button onClick=null iconButton=true}}
-              {{paper-icon "more-vert" class="md-menu-origin"}}
-            {{/paper-button}}
-          {{/menu.trigger}}
-
-          {{#menu.content class="task-list-item-menu" as |content|}}
-            {{#content.menu-item onClick=(action (mut editMode) (not editMode))}}
-              {{paper-icon "mode-edit" class="md-menu-align-target"}}
-              <span>Edit</span>
-            {{/content.menu-item}}
-
-            {{#unless subtask}}
+        {{#unless subtask}}
+          {{#paper-menu as |menu|}}
+            {{#menu.trigger}}
+              {{#paper-button onClick=null iconButton=true}}
+                {{paper-icon "flag" class="md-menu-origin"}}
+              {{/paper-button}}
+            {{/menu.trigger}}
+            {{#menu.content class="task-list-item-menu" as |content|}}
               {{#each priorityItems as |priorityItem|}}
                 {{#content.menu-item onClick=(action "changePriority" priorityItem.value)}}
                   {{paper-icon priorityItem.icon class="md-menu-align-target"}}
                   <span>{{priorityItem.title}}</span>
                 {{/content.menu-item}}
               {{/each}}
+            {{/menu.content}}
+          {{/paper-menu}}
+        {{/unless}}
+        
+        {{#paper-menu as |menu|}}
+          {{#menu.trigger}}
+            {{#paper-button onClick=null iconButton=true}}
+              {{paper-icon "more-vert" class="md-menu-origin"}}
+            {{/paper-button}}
+          {{/menu.trigger}}
+          {{#menu.content class="task-list-item-menu" as |content|}}
+            {{#unless subtask}}
+              {{#content.menu-item onClick=(action "showOverview" item.id)}}
+                {{paper-icon "visibility" class="md-menu-align-target"}}
+                <span>Overview</span>
+              {{/content.menu-item}}
             {{/unless}}
+
+            {{#content.menu-item onClick=(action (mut editMode) (not editMode))}}
+              {{paper-icon "mode-edit" class="md-menu-align-target"}}
+              <span>Edit</span>
+            {{/content.menu-item}}
             
             {{#content.menu-item onClick=(action (mut isDeleteConfirmationDialogVisible) true)}}
               {{paper-icon "delete" class="md-menu-align-target"}}

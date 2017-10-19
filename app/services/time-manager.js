@@ -24,6 +24,10 @@ export default Ember.Service.extend({
     return this.getMidnightMsOfDate(DATE_AFTER_WEEK);
   },
 
+  getDuration(ms, format) {
+    return moment.duration(ms).format(format)
+  },
+
   now() {
     return moment().valueOf();
   }

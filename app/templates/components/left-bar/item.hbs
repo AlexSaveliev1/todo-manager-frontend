@@ -66,7 +66,7 @@
 {{/if}}
 
 {{#if statisticsModalVisible}}
-  {{statistics-modal title=title queryParams=queryParams onClose=(action (mut statisticsModalVisible) false)}}
+  {{statistics-modal tasks=tasks title=title queryParams=queryParams onClose=(action (mut statisticsModalVisible) false)}}
 {{/if}}
 
 {{#if isDeleteConfirmationDialogVisible}}

@@ -1,8 +1,9 @@
 <aside class="left-bar-menu">
+  {{log tasks.length}}
   <nav>
     <ul class="left-bar-menu-list">
       {{#each filters as |filter|}}
-        {{left-bar/item label=filter.label titleIcon=filter.icon
+        {{left-bar/item tasks=filter.tasks label=filter.label titleIcon=filter.icon
           link=filter.link title=filter.label tagName=filter.tagName className=filter.className}}
       {{/each}}
     </ul>
@@ -27,7 +28,7 @@
       <nav>
         <ul class="left-bar-menu-list">
           {{#each current.m.groups as |group|}}
-            {{left-bar/item item=group title=group.title onSave=(action "saveGroup") onDelete=(action "deleteGroup") param=group.param
+            {{left-bar/item tasks=group.tasks item=group title=group.title onSave=(action "saveGroup") onDelete=(action "deleteGroup") param=group.param
               actionsButtons=true link=group.link className="left-bar-item"}} 
           {{/each}}
         </ul>
@@ -44,7 +45,7 @@
       <nav>
         <ul class="left-bar-menu-list">
           {{#each current.m.filters as |filter|}}
-            {{left-bar/item title=filter.title link=filter.link param=filter.param tagName="li" className="left-bar-item"}}
+            {{left-bar/item tasks=filter.tasks title=filter.title link=filter.link param=filter.param tagName="li" className="left-bar-item"}}
           {{/each}}
         </ul>
       </nav>

@@ -86,7 +86,7 @@ export default Ember.Component.extend({
           title: titleToChange,
           group: this.get('groupId'),
           dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
-          createdAt: this.get('timeManager').getTodayMidnightMs()
+          createdAt: this.get('timeManager').now()
         };
 
       if (subtask) {
@@ -94,6 +94,10 @@ export default Ember.Component.extend({
       }
 
       titleToChange && this.sendAction('onAddNew', newItem);
+    },
+
+    showOverview(id) {
+      this.get('router').transitionTo('index.task', [id]);
     },
 
     cancel() {
