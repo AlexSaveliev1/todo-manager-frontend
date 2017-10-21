@@ -97,6 +97,10 @@ export default Ember.Component.extend({
   })),
 
   actions: {
+    stopPropagation(event) {
+      event.stopPropagation();
+    },
+
     dragTask(task, dragOptions) {
       const id = dragOptions.target.group.get('id');
 

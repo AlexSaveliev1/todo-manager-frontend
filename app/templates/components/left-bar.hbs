@@ -16,7 +16,7 @@
     onChange=(action (mut selectedTab)) as |tabs|}}
 
     {{#each menuTabs as |tab|}}
-      {{#tabs.tab value=tab}}
+      {{#tabs.tab value=tab onClick=(action "stopPropagation")}}
         {{tab.title}}
       {{/tabs.tab}}
     {{/each}}

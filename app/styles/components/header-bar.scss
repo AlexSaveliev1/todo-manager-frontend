@@ -2,5 +2,16 @@
 
 .header-wrapper {
   height: $header-height;
-  background-color: #DB4C3F;
+  background-color: #3f51b5;
+
+  box-sizing: border-box;
+  padding-left: 20px;
+
+  .header-menu-icon {
+    color: $white;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

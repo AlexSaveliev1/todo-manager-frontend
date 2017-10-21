@@ -4,7 +4,7 @@ const ANGULAR_MATERIAL_SM_LAYOUT = 960;
 
 export default Ember.Controller.extend({
   desktopMode: true,
-  leftSideBarOpen2: true,
+  menuOpened: false,
 
   init() {
     const $window = $(window);

@@ -1,4 +1,4 @@
-{{header-bar}}
+{{header-bar onMenu=(action (mut menuOpened) (not menuOpened))}}
 
 {{#if desktopMode}}
   <div class="dashboard-wrapper">
@@ -14,11 +14,10 @@
   {{#paper-sidenav
     class="md-whiteframe-z2 flex-sm-40"
     name="left2"
-    open=leftSideBarOpen2
-    lockedOpen=leftSideBarLockedOpen
-    onToggle=(action (mut leftSideBarOpen2))}}
+    open=menuOpened
+    onToggle=(action (mut menuOpened))}}
     {{#paper-toolbar as |toolbar|}}
-      {{#paper-toolbar-tools}}Left Sidenav{{/paper-toolbar-tools}}
+      {{#paper-toolbar-tools}}Menu{{/paper-toolbar-tools}}
     {{/paper-toolbar}}
     {{#paper-content padding=true}}
       {{left-bar tasks=model.tasks groups=model.groups}}
@@ -26,7 +25,7 @@
   {{/paper-sidenav}}
 
 {{#paper-card-content class="flex layout-row"}}
-  {{#if leftSideBarOpen2}}
+  {{#if menuOpened}}
     <div class="layout-fill flex-25 layout-align-start-start layout-column" style="height: 500px"></div>
   {{/if}}
   {{outlet}}
