@@ -1,5 +1,11 @@
 import Ember from 'ember';
 
+const RADIO_BUTTON_COLOR_PALETTE = {
+  1: 'first-priority',
+  2: 'second-priority',
+  3: 'third-priority'
+};
+
 export default Ember.Component.extend({
   timeManager: Ember.inject.service(),
   router: Ember.inject.service('-routing'),
@@ -14,28 +20,38 @@ export default Ember.Component.extend({
   addButtonLabel: 'Add new task',
   dueDate: '',
   dueDateToChange: '',
-  datePickerYearRange: Ember.computed(function () {
-    const currentYear = this.get('timeManager').getCurrentYear(),
-      maxYearRange = 3;
-
-    return `${currentYear}, ${currentYear + maxYearRange}`;
-  }),
   dueDateAvailable: true,
   subtask: false,
+  radioButton: true,
   editMode: false,
   addNewMode: false,
   isDeleteConfirmationDialogVisible: false,
 
   titleToChange: Ember.computed.reads('title'),
-  dueDateObserver: Ember.on('init', Ember.observer('dueDateMs', function () {
-    let ms = this.get('dueDateMs'),
-      convertedMsToDate = this.get('timeManager').convertMsToDate(ms, 'MMM D YYYY'),
-      dueDate = this.get('timeManager').convertMsToDate(ms, 'MMM D');
+  radioButtonClassNames: Ember.computed('priority', function () {
+    const priority = this.get('priority'),
+      priorityClassName = RADIO_BUTTON_COLOR_PALETTE[priority];
 
-    return ms && this.setProperties({
-      dueDateToChange: convertedMsToDate,
-      dueDate
-    });
+    return ['task-list-item-radio', priorityClassName].join(' ');
+  }),
+  dueDateObserver: Ember.on('init', Ember.observer('dueDateMs', 'defaultDueDate', function () {
+    const { dueDateMs, defaultDueDate } = this.getProperties('dueDateMs', 'defaultDueDate');
+
+    if (dueDateMs) {
+      let convertedMsToDate = this.get('timeManager').convertMsToDate(dueDateMs, 'MMM D YYYY'),
+        dueDate = this.get('timeManager').convertMsToDate(dueDateMs, 'MMM D');
+
+      return dueDateMs && this.setProperties({
+        dueDateToChange: convertedMsToDate,
+        dueDate
+      });
+    }
+
+    if (defaultDueDate) {
+      let convertedMsToDate = this.get('timeManager').convertMsToDate(defaultDueDate, 'MMM D YYYY');
+
+      this.set('dueDateToChange', convertedMsToDate);
+    }
   })),
 
   priorityItems: Ember.computed(function () {
@@ -58,7 +74,21 @@ export default Ember.Component.extend({
     ];
   }),
 
+  datePickerYearRange: Ember.computed(function () {
+    const currentYear = this.get('timeManager').getCurrentYear(),
+      maxYearRange = 3;
+
+    return `${currentYear}, ${currentYear + maxYearRange}`;
+  }),
+
   actions: {
+    markAsComplete() {
+      const item = this.get('item');
+
+      item.set('finishedAt', this.get('timeManager').now());
+      this.sendAction('onComplete', item);
+    },
+
     save() {
       const { item, dueDateToChange } = this.getProperties('item', 'dueDateToChange');
 
@@ -81,13 +111,16 @@ export default Ember.Component.extend({
     },
 
     addNew() {
-      const { dueDateToChange, titleToChange, subtask, taskId } = this.getProperties('dueDateToChange', 'titleToChange', 'subtask', 'taskId'),
-        newItem = {
-          title: titleToChange,
-          group: this.get('groupId'),
-          dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
-          createdAt: this.get('timeManager').now()
-        };
+      const { dueDateToChange, titleToChange, subtask, taskId, 
+        defaultGroupId, defaultPriority } = this.getProperties('dueDateToChange', 'titleToChange', 'subtask', 'taskId', 'defaultGroupId', 'defaultPriority');
+
+      let newItem = {
+        title: titleToChange,
+        group: defaultGroupId,
+        dueDate: this.get('timeManager').getMidnightMsOfDate(dueDateToChange),
+        createdAt: this.get('timeManager').now(),
+        priority: defaultPriority || null
+      };
 
       if (subtask) {
         newItem.task = taskId;

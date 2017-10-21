@@ -1,12 +1,15 @@
-<h2>{{title}}</h2>
+<h2>Task overview:</h2>
+{{task-list/item id=task.id item=task radioButton=false title=task.title
+  onSave=(action "saveTask") onChangePriority=(action "changePriority")
+  dueDateMs=task.dueDate groupId=task.groupId className="task-overview-item"}}
 
 <div class="task-overview-completed">
   {{#if task.finishedAt}}
     <span>Forgot to do one thing</span>
-    {{#paper-button primary=true onClick=(action "markAsUncompleted")}}Uncomplete{{/paper-button}}
+    {{#paper-button primary=true onClick=(action "markAsUncompleted" task)}}Uncomplete{{/paper-button}}
   {{else}}
     <span>I have been already complete this task</span>
-    {{#paper-button primary=true onClick=(action "markAsCompleted")}}Mark as completed{{/paper-button}}
+    {{#paper-button primary=true onClick=(action "markAsCompleted" task)}}Mark as completed{{/paper-button}}
   {{/if}}
 </div>
 

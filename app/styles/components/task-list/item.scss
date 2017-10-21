@@ -4,8 +4,11 @@
   padding-top: 15px;
   padding-bottom: 15px;
 
+  &:active {
+    cursor: pointer;
+  }
+
   list-style-type: none;
-  border-bottom: 1px solid $soft-grey;
 
   &.no-border {
     border-bottom: none;
@@ -22,6 +25,8 @@
   }
   
   .task-list-item-content {
+    border-bottom: 1px solid $soft-grey;
+
     .task-list-item-input, .task-list-item-button {
       margin-top: 0;
       margin-bottom: 0;
@@ -40,11 +45,46 @@
 
     .task-list-item-radio {
       margin-bottom: 0px;
+
+      &.first-priority {
+        .md-off {
+          border-color: $red;
+        }
+
+        .md-on {
+          background-color:$red;
+        }
+      }
+
+      &.second-priority {
+        .md-off {
+          border-color: $orange-red;
+        }
+
+        .md-on {
+          background-color:$orange-red;
+        }
+      }
+
+      &.third-priority {
+        .md-off {
+          border-color: $mint-green;
+        }
+
+        .md-on {
+          background-color: $mint-green;
+        }
+      }
     }
     
     .task-list-item-value {
       min-height: 25px;      
       position: relative;
+
+      .task-list-item-value-link {
+        color: $black;
+        text-decoration: none;
+      }
       
       .task-list-item-edit-icon-wrapper {
         display: none;

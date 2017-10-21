@@ -10,13 +10,14 @@ export default Ember.Route.extend({
           from = this.get('timeManager').getTodayMidnightMs(),
           to = this.get('timeManager').getMidnightMsAfterWeek();
 
-        if (taskDueDate >= from && taskDueDate <= to) {
+        if (taskDueDate >= from && taskDueDate <= to && !task.get('finishedAt')) {
           return task;
         }
       });
 
     return {
-      tasks
+      tasks,
+      defaultDueDate: this.get('timeManager').getTodayMidnightMs()
     };
   }
 });

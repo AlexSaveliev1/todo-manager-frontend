@@ -1,4 +1,4 @@
-<div class="task-list-item-content layout-column">
+<div class="task-list-item-content layout-column {{className}}">
   {{#if editMode}}
     {{#paper-form onSubmit=(action "save") as |form|}}
       <div class="layout-row layout-align-space-between">
@@ -31,11 +31,13 @@
   
   {{else}}
     <div class="layout-row layout-align-center-center">
-      {{paper-radio toggle=true value="Toggable" groupValue=toggleValue
-        onChange=(action (mut toggleValue)) class="task-list-item-radio"}}
+      {{#if radioButton}}
+        {{paper-radio toggle=true value="Toggable" checked=item.finishedAt
+          onChange=(action "markAsComplete") class=radioButtonClassNames}}
+      {{/if}}
       <div class="task-list-item-value layout-row layout-align-center-center">
         {{#unless subtask}}
-          {{#link-to "index.task" item.id}}{{title}}{{/link-to}}
+          {{#link-to "index.task" item.id class="task-list-item-value-link"}}{{title}}{{/link-to}}
         {{else}}
           {{title}}
         {{/unless}}

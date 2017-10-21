@@ -1,4 +1,15 @@
 .task-list-wrapper {
   margin-top: 0;
   padding-left: 0;
+
+  
+  .sortable-task {
+    &:hover {
+      cursor: move;
+    }
+
+    &.is-dragging-object {
+      background-color: $soft-grey;
+    }
+  }
 }

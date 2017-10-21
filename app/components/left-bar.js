@@ -5,34 +5,17 @@ export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
   timeManager: Ember.inject.service(),
 
-  classNames: ['left-bar-wrapper', 'flex-25'],
+  classNames: ['left-bar-wrapper', 'flex-100', 'flex-gt-sm-25'],
 
   tasks: [],
 
-  filters: Ember.computed(function () {
-    return [{
-      label: 'Inbox',
-      icon: 'Inbox',
-      tagName: 'li',
-      className: 'left-bar-item',
-      link: 'index.inbox',
-      tasks: this.get('tasks').filter(task => !task.get('group'))
-    },
-    {
-      label: 'Today',
-      icon: 'Today',
-      tagName: 'li',
-      className: 'left-bar-item',
-      link: 'index.today',
-      tasks: this.get('tasks').filter(task => task.get('dueDate') === this.get('timeManager').now())
-    },
-    {
-      label: 'Next 7 days',
-      icon: 'schedule',
-      tagName: 'li',
-      className: 'left-bar-item',
-      link: 'index.week',
-      tasks: this.get('tasks').filter(task => {
+  filters: [],
+  menuTabs: [],
+
+  filtersObserver: Ember.on('init', Ember.observer('tasks.@each.dueDate', 'tasks.@each.group', function () {
+    const inboxTasks = this.get('tasks').filter(task => !task.get('group')),
+      todayTasks = this.get('tasks').filter(task => task.get('dueDate') === this.get('timeManager').getTodayMidnightMs()),
+      weekTasks = this.get('tasks').filter(task => {
         const taskDueDate = task.get('dueDate'),
           from = this.get('timeManager').getTodayMidnightMs(),
           to = this.get('timeManager').getMidnightMsAfterWeek();
@@ -40,44 +23,87 @@ export default Ember.Component.extend({
         if (taskDueDate >= from && taskDueDate <= to) {
           return task;
         }
-      })
-    }];
-  }),
-
-  menuTabs: Ember.computed('groups', function () {
-    return [{
-      title: 'Groups',
-      groups: this.get('groups').map(group => {
-        const allTasks = this.get('tasks'),
-          tasks = allTasks.filter(task => task.get('group') === Number(group.get('id')));
-
-        return Object.assign(group, { tasks }, { link: 'index.groups' }, { param: group.get('id') })
-      })
-    },
-    {
-      title: 'Filters',
-      filters: [{
-        title: 'Priority 1',
-        link: 'index.filters',
-        param: '1',
-        tasks: this.get('tasks').filter(task => task.get('priority') === 1)
+      }),
+      filters = [{
+        label: 'Inbox',
+        icon: 'Inbox',
+        tagName: 'li',
+        className: 'left-bar-item',
+        link: 'index.inbox',
+        tasks: inboxTasks,
+        totalTasks: inboxTasks.filter(task => !task.get('finishedAt')).get('length')
       },
       {
-        title: 'Priority 2',
-        link: 'index.filters',
-        param: '2',
-        tasks: this.get('tasks').filter(task => task.get('priority') === 2)
+        label: 'Today',
+        icon: 'Today',
+        tagName: 'li',
+        className: 'left-bar-item',
+        link: 'index.today',
+        tasks: todayTasks,
+        totalTasks: todayTasks.filter(task => !task.get('finishedAt')).get('length')
       },
       {
-        title: 'Priority 3',
-        link: 'index.filters',
-        param: '3',
-        tasks: this.get('tasks').filter(task => task.get('priority') === 3)
-      }]
-    }];
-  }),
+        label: 'Next 7 days',
+        icon: 'schedule',
+        tagName: 'li',
+        className: 'left-bar-item',
+        link: 'index.week',
+        tasks: weekTasks,
+        totalTasks: weekTasks.filter(task => !task.get('finishedAt')).get('length')
+      }];
+
+    this.set('filters', filters);
+  })),
+
+  menuTabsObserver: Ember.on('init', Ember.observer('tasks', function () {
+    const allTasks = this.get('tasks'),
+      firstPriorityTasks = allTasks.filter(task => task.get('priority') === 1),
+      secondPriorityTasks = allTasks.filter(task => task.get('priority') === 2),
+      thirdPriorityTasks = allTasks.filter(task => task.get('priority') === 3),
+      menuTabs = [{
+        title: 'Groups',
+        groups: this.get('groups').map(group => {
+          let tasks = allTasks.filter(task => task.get('group') === Number(group.get('id')));
+
+          return Object.assign(group, { tasks, totalTasks: tasks.get('length') }, { link: 'index.groups' }, { param: group.get('id') })
+        })
+      },
+      {
+        title: 'Filters',
+        filters: [{
+          title: 'Priority 1',
+          link: 'index.filters',
+          param: '1',
+          tasks: firstPriorityTasks,
+          totalTasks: firstPriorityTasks.filter(task => !task.get('finishedAt')).get('length')
+        },
+        {
+          title: 'Priority 2',
+          link: 'index.filters',
+          param: '2',
+          tasks: secondPriorityTasks,
+          totalTasks: secondPriorityTasks.filter(task => !task.get('finishedAt')).get('length')
+        },
+        {
+          title: 'Priority 3',
+          link: 'index.filters',
+          param: '3',
+          tasks: thirdPriorityTasks,
+          totalTasks: thirdPriorityTasks.filter(task => !task.get('finishedAt')).get('length')
+        }]
+      }];
+
+    this.set('menuTabs', menuTabs);
+  })),
 
   actions: {
+    dragTask(task, dragOptions) {
+      const id = dragOptions.target.group.get('id');
+
+      task.set('group', id);
+      task.save();
+    },
+
     addGroup(title) {
       const newGroup = this.get('store').createRecord('group', {
         title

@@ -26,7 +26,7 @@
           {{#if titleIcon}}
             {{paper-icon titleIcon size=24 class="left-bar-item-title-icon"}}
           {{/if}}
-          <div>{{title}}</div>
+          <div>{{title}} - {{totalTasks}}</div>
         </div>
         <div class="left-bar-item-icons layout-row">
           <div onClick={{action "showStatisticsModal"}}>
@@ -53,7 +53,7 @@
           {{#if titleIcon}}
             {{paper-icon titleIcon size=24 class="left-bar-item-title-icon"}}
           {{/if}}
-          <div>{{title}}</div>
+          <div>{{title}} - {{totalTasks}}</div>
         </div>
         <div class="left-bar-item-icons layout-row">
           <div onClick={{action "showStatisticsModal"}}>

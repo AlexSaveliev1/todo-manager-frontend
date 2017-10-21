@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   timeManager: Ember.inject.service(),
 
-  classNames: ['task-overview-wrapper', 'flex-75'],
+  classNames: ['task-overview-wrapper', 'flex-100', 'flex-gt-sm-100'],
 
   estimatedTime: Ember.computed('task', function () {
     const task = this.get('task'),
@@ -63,18 +63,27 @@ export default Ember.Component.extend({
   addNewSubtaskMode: false,
 
   actions: {
-    markAsCompleted() {
-      const task = this.get('task');
-
+    markAsCompleted(task) {
       task.set('finishedAt', this.get('timeManager').now());
       task.save();
     },
 
-    markAsUncompleted() {
-      const task = this.get('task');
-
+    markAsUncompleted(task) {
       task.set('finishedAt', null);
       task.save();
+    },
+
+    saveTask(item) {
+      item.save();
+    },
+
+    changePriority(item, priority) {
+      item.setProperties({
+        priority,
+        updatedAt: this.get('timeManager').now()
+      });
+
+      item.save();
     },
 
     addSubtask(properties) {

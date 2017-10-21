@@ -1,7 +1,35 @@
-<div class="dashboard-wrapper">
-  {{header-bar}}
-  <section class="dashboard-container margin-auto layout-row flex-md-85 flex-sm-90">
-    {{left-bar tasks=model.tasks groups=model.groups}}
-    {{outlet}}
-  </section>
-</div>
+{{header-bar}}
+
+{{#if desktopMode}}
+  <div class="dashboard-wrapper">
+    <section class="dashboard-container margin-auto layout-row flex-md-85 flex-sm-90">
+      {{left-bar tasks=model.tasks groups=model.groups}}
+      {{outlet}}
+    </section>
+  </div>
+
+{{else}}
+
+{{#paper-sidenav-container class="inner-sidenav"}}
+  {{#paper-sidenav
+    class="md-whiteframe-z2 flex-sm-40"
+    name="left2"
+    open=leftSideBarOpen2
+    lockedOpen=leftSideBarLockedOpen
+    onToggle=(action (mut leftSideBarOpen2))}}
+    {{#paper-toolbar as |toolbar|}}
+      {{#paper-toolbar-tools}}Left Sidenav{{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{#paper-content padding=true}}
+      {{left-bar tasks=model.tasks groups=model.groups}}
+    {{/paper-content}}
+  {{/paper-sidenav}}
+
+{{#paper-card-content class="flex layout-row"}}
+  {{#if leftSideBarOpen2}}
+    <div class="layout-fill flex-25 layout-align-start-start layout-column" style="height: 500px"></div>
+  {{/if}}
+  {{outlet}}
+  {{/paper-card-content}}
+{{/paper-sidenav-container}}
+{{/if}}

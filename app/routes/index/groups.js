@@ -6,7 +6,7 @@ export default Ember.Route.extend({
 
     return {
       group: this.store.peekRecord('group', id),
-      tasks: this.store.peekAll('task').filter(task => task.get('group') === Number(id))
+      tasks: this.store.peekAll('task').filter(task => task.get('group') === Number(id) && !task.get('finishedAt'))
     };
   }
 });

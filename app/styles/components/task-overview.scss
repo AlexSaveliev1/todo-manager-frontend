@@ -6,6 +6,20 @@
 
   min-height: 500px;
   border-bottom: 1px solid $soft-grey;
+
+  .task-list-item-wrapper {
+    width: 80%;
+
+    .task-list-item-content {
+      &.task-overview-item {
+        padding-left: 15px;
+        font-size: 17px;
+        border-bottom: none;
+      }
+    }
+  }
+
+  
   
   .task-overview-completed {
     margin-top: 20px;
@@ -14,13 +28,9 @@
   .task-overview-content-wrapper {
     padding-left: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid $soft-grey;
 
     .task-overview-time-tracking-title {
       margin-bottom: 10px;
-    }
-
-    .task-overview-time-tracking {
     }
 
     .task-overview-subtask-list {

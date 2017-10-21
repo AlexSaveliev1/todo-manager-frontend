@@ -7,7 +7,8 @@ export default Ember.Route.extend({
     const todayMidnightMs = this.get('timeManager').getTodayMidnightMs();
 
     return {
-      tasks: this.store.peekAll('task').filter(task => task.get('dueDate') === todayMidnightMs)
+      tasks: this.store.peekAll('task').filter(task => task.get('dueDate') === todayMidnightMs && !task.get('finishedAt')),
+      defaultDueDate: this.get('timeManager').getTodayMidnightMs()
     };
   }
 });
