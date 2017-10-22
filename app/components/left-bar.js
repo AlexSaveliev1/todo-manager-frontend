@@ -65,7 +65,7 @@ export default Ember.Component.extend({
         groups: this.get('groups').map(group => {
           let tasks = allTasks.filter(task => task.get('group') === Number(group.get('id')));
 
-          return Object.assign(group, { tasks, totalTasks: tasks.get('length') }, { link: 'index.groups' }, { param: group.get('id') })
+          return Object.assign(group, { tasks, totalTasks: tasks.filter(task => !task.get('finishedAt')).get('length') }, { link: 'index.groups' }, { param: group.get('id') })
         })
       },
       {

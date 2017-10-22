@@ -11,7 +11,7 @@ export default Ember.Component.extend({
   }),
 
   summaryEstimated: Ember.computed('tasks', function () {
-    const tasks = this.get('tasks'),
+    const tasks = this.get('tasks').filter(task => !task.get('finishedAt')),
       summaryEstimatedMs = tasks.reduce((sum, task) => {
         const { createdAt, dueDate } = task.getProperties('createdAt', 'dueDate');
 
@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   }),
 
   summaryRemaining: Ember.computed('tasks', function () {
-    const tasks = this.get('tasks'),
+    const tasks = this.get('tasks').filter(task => !task.get('finishedAt')),
       summaryRemainingMs = tasks.reduce((sum, task) => {
         const dueDate = task.get('dueDate'),
           now = this.get('timeManager').now(),

@@ -1,7 +1,7 @@
 <h2>Task overview:</h2>
 {{task-list/item id=task.id item=task radioButton=false title=task.title
   onSave=(action "saveTask") onChangePriority=(action "changePriority")
-  dueDateMs=task.dueDate groupId=task.groupId className="task-overview-item"}}
+  dueDateMs=task.dueDate groupId=task.groupId className="task-overview-item flex-gt-sm-80 flex-100"}}
 
 <div class="task-overview-completed">
   {{#if task.finishedAt}}

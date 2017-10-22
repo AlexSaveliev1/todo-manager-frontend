@@ -8,13 +8,11 @@
   border-bottom: 1px solid $soft-grey;
 
   .task-list-item-wrapper {
-    width: 80%;
-
+    border-bottom: none;
     .task-list-item-content {
       &.task-overview-item {
         padding-left: 15px;
         font-size: 17px;
-        border-bottom: none;
       }
     }
   }

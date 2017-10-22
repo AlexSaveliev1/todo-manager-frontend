@@ -4,6 +4,10 @@ import RSVP from 'rsvp';
 export default Ember.Route.extend({
   timeManager: Ember.inject.service(),
 
+  beforeModel() {
+    this.transitionTo('index.inbox');
+  },
+
   model() {
     const groupQuery = this.store.findAll('group');
 

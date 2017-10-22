@@ -72,6 +72,6 @@
 {{#if isDeleteConfirmationDialogVisible}}
   {{confirm-dialog onConfirm=(action "delete") onCancel=(action (mut isDeleteConfirmationDialogVisible) false)
     fullscreen="true" clickOutsideToClose="true" title="Confirm delete" confirmButtonLabel="Delete"
-    question=(concat "Are you sure you want to delete group '" groupTitleToDelete "' ?")}}
+    question=(concat "Are you sure you want to delete group '" title "' ?")}}
 {{/if}}
 

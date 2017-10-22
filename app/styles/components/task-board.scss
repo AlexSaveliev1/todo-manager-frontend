@@ -11,9 +11,15 @@
   border-right: 1px solid $soft-grey;
   border-left: 1px solid $soft-grey;
 
+  .task-board-title {
+    margin-bottom: 10px;
+  }
+
   .task-board-add-task-button {
-    color: $dark-orange;
-    margin-top: 20px;
+    color: $primary-blue;
     cursor: pointer;
+
+    margin-top: 20px;
+    padding-left: 10px;
   }
 }

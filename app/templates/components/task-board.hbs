@@ -1,6 +1,6 @@
-<h2>{{title}}</h2>
+<h2 class="task-board-title">{{title}}</h2>
 {{#task-list}}
-{{#sortable-objects sortableObjectList=tasks sortEndAction='sortEndAction'enableSort=true}}
+{{#sortable-objects sortableObjectList=tasks sortEndAction='sortEndAction' enableSort=true}}
     {{#each tasks as |task|}}
       {{#draggable-object content=task overrideClass='sortable-task' isSortable=true}}
         {{task-list/item id=task.id item=task title=task.title dueDateMs=task.dueDate groupId=task.groupId  priority=task.priority
@@ -8,11 +8,6 @@
       {{/draggable-object}}
     {{/each}}
   {{/sortable-objects}}
-
-  {{!-- {{#each tasks as |task|}}
-    {{task-list/item id=task.id item=task title=task.title dueDateMs=task.dueDate groupId=task.groupId  priority=task.priority
-      onSave=(action "saveTask") onDelete=(action "deleteTask") onChangePriority=(action "changePriority") onComplete=(action "completeTask")}}
-  {{/each}} --}}
 
   {{#if addNewTaskMode}}
     {{task-list/item defaultDueDate=defaultDueDate defaultGroupId=defaultGroupId defaultPriority=defaultPriority addNewMode=addNewTaskMode onAddNew=(action "addTask")

@@ -9,7 +9,6 @@
   </div>
 
 {{else}}
-
 {{#paper-sidenav-container class="inner-sidenav"}}
   {{#paper-sidenav
     class="md-whiteframe-z2 flex-sm-40"
@@ -24,11 +23,8 @@
     {{/paper-content}}
   {{/paper-sidenav}}
 
-{{#paper-card-content class="flex layout-row"}}
-  {{#if menuOpened}}
-    <div class="layout-fill flex-25 layout-align-start-start layout-column" style="height: 500px"></div>
-  {{/if}}
-  {{outlet}}
+  {{#paper-card-content class="flex layout-row"}}
+    {{outlet}}
   {{/paper-card-content}}
 {{/paper-sidenav-container}}
 {{/if}}
