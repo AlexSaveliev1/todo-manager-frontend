@@ -1,7 +1,7 @@
 {{#if addNewMode}}
   {{#paper-form class="left-bar-item-form" onSubmit=(action "addNew") as |form|}}
     <div class="layout-row layout-align-center">
-      {{form.input onChange=(action (mut newTitle)) label="e.g. Projects / Home" value=newTitle class="left-bar-item-input"}}
+      {{form.input onChange=(action (mut item.title)) label="e.g. Projects / Home" value=item.title class="left-bar-item-input"}}
     </div>
     <div class="layout-row layout-align-center">
       {{#form.submit-button primary=true}}Add{{/form.submit-button}}

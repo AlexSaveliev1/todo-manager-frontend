@@ -4,7 +4,6 @@ export default Ember.Component.extend({
   classNames: ['left-bar-item-wrapper'],
 
   item: {},
-  newTitle: '',
   statisticsModalVisible: false,
   isDeleteConfirmationDialogVisible: false,
   editMode: false,
@@ -21,14 +20,8 @@ export default Ember.Component.extend({
     },
 
     addNew() {
-      const title = this.get('newTitle');
-
-      if (!title) {
-        return;
-      }
-
-      this.sendAction('onAdd', title);
-      this.set('newTitle', '');
+      this.sendAction('onAdd', this.get('item'));
+      this.set('item.title', '');
     },
 
     delete() {

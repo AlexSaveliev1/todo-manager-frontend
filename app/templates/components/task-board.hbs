@@ -1,7 +1,7 @@
 <h2 class="task-board-title">{{title}}</h2>
 {{#task-list}}
-{{#sortable-objects sortableObjectList=tasks sortEndAction='sortEndAction' enableSort=true}}
-    {{#each tasks as |task|}}
+{{#sortable-objects sortableObjectList=sortedTasks sortEndAction="sortEndAction" enableSort=true}}
+    {{#each sortedTasks as |task|}}
       {{#draggable-object content=task overrideClass='sortable-task' isSortable=true}}
         {{task-list/item id=task.id item=task title=task.title dueDateMs=task.dueDate groupId=task.groupId  priority=task.priority
           onSave=(action "saveTask") onDelete=(action "deleteTask") onChangePriority=(action "changePriority") onComplete=(action "completeTask")}}

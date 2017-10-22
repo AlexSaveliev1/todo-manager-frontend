@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   router: Ember.inject.service('-routing'),
   timeManager: Ember.inject.service(),
 
-  classNames: ['left-bar-wrapper', 'flex-100', 'flex-gt-sm-25'],
+  classNames: ['left-bar-wrapper', 'flex-100'],
 
   tasks: [],
 
@@ -20,15 +20,11 @@ export default Ember.Component.extend({
           from = this.get('timeManager').getTodayMidnightMs(),
           to = this.get('timeManager').getMidnightMsAfterWeek();
 
-        if (taskDueDate >= from && taskDueDate <= to) {
-          return task;
-        }
+        return taskDueDate >= from && taskDueDate <= to;
       }),
       filters = [{
         label: 'Inbox',
         icon: 'Inbox',
-        tagName: 'li',
-        className: 'left-bar-item',
         link: 'index.inbox',
         tasks: inboxTasks,
         totalTasks: inboxTasks.filter(task => !task.get('finishedAt')).get('length')
@@ -36,8 +32,6 @@ export default Ember.Component.extend({
       {
         label: 'Today',
         icon: 'Today',
-        tagName: 'li',
-        className: 'left-bar-item',
         link: 'index.today',
         tasks: todayTasks,
         totalTasks: todayTasks.filter(task => !task.get('finishedAt')).get('length')
@@ -45,8 +39,6 @@ export default Ember.Component.extend({
       {
         label: 'Next 7 days',
         icon: 'schedule',
-        tagName: 'li',
-        className: 'left-bar-item',
         link: 'index.week',
         tasks: weekTasks,
         totalTasks: weekTasks.filter(task => !task.get('finishedAt')).get('length')
@@ -65,7 +57,12 @@ export default Ember.Component.extend({
         groups: this.get('groups').map(group => {
           let tasks = allTasks.filter(task => task.get('group') === Number(group.get('id')));
 
-          return Object.assign(group, { tasks, totalTasks: tasks.filter(task => !task.get('finishedAt')).get('length') }, { link: 'index.groups' }, { param: group.get('id') })
+          return Object.assign(group,
+            { tasks,
+              totalTasks: tasks.filter(task => !task.get('finishedAt')).get('length')
+            },
+            { param: group.get('id')
+            });
         })
       },
       {
@@ -114,7 +111,7 @@ export default Ember.Component.extend({
       });
 
       return newGroup.save()
-        .then(addedGroup => Object.assign(addedGroup, { link: 'index.groups' }, { param: addedGroup.get('id') }))
+        .then(addedGroup => Object.assign(addedGroup, { param: addedGroup.get('id') }))
         .then(group => this.get('menuTabs.firstObject.groups').pushObject(group))
         .then(() => this.set('isAddGroupFormVisible', false));
     },

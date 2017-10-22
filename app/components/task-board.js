@@ -9,18 +9,23 @@ export default Ember.Component.extend({
   classNames: ['task-board-wrapper', 'flex-100', 'flex-gt-sm-75'],
 
   tasks: [],
+  sortedTasks: Ember.computed('tasks.[]', function () {
+    return this.get('tasks').sortBy('order');
+  }),
   addNewTaskMode: false,
   isConfirmDialogVisible: false,
 
   actions: {
     sortEndAction() {
-      const tasks = this.get('tasks');
+      const tasks = this.get('sortedTasks');
 
-      let orderedTasks = tasks.map((task, index) => {
-        const id = task.get('id');
+      tasks.forEach((task, newOrder) => {
+        const currentOrder = task.get('order');
 
-        // task.set('order', Number(id) + index);
-        // task.save()
+        if (currentOrder !== newOrder) {
+          task.set('order', newOrder);
+          task.save();
+        }
       });
     },
 
@@ -41,7 +46,9 @@ export default Ember.Component.extend({
     },
 
     addTask(properties) {
-      this.get('store').createRecord('task', properties).save()
+      const order = this.get('sortedTasks.lastObject.order') + 1;
+
+      this.get('store').createRecord('task', Object.assign({}, properties, { order })).save()
         .then(addedTask => this.get('tasks').pushObject(addedTask));
 
       this.set('addNewTaskMode', false);

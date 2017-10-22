@@ -73,17 +73,17 @@ export default Ember.Component.extend({
       task.save();
     },
 
-    saveTask(item) {
-      item.save();
+    saveTask(task) {
+      task.save();
     },
 
-    changePriority(item, priority) {
-      item.setProperties({
+    changePriority(task, priority) {
+      task.setProperties({
         priority,
         updatedAt: this.get('timeManager').now()
       });
 
-      item.save();
+      task.save();
     },
 
     addSubtask(properties) {

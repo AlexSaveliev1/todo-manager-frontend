@@ -51,14 +51,14 @@
         {{#unless subtask}}
           {{#paper-menu as |menu|}}
             {{#menu.trigger}}
-              {{#paper-button onClick=null iconButton=true}}
-                {{paper-icon "flag" class="md-menu-origin"}}
+              {{#paper-button iconButton=true}}
+                {{paper-icon "flag" title="Set priority" class="md-menu-origin"}}
               {{/paper-button}}
             {{/menu.trigger}}
             {{#menu.content class="task-list-item-menu" as |content|}}
               {{#each priorityItems as |priorityItem|}}
                 {{#content.menu-item onClick=(action "changePriority" priorityItem.value)}}
-                  {{paper-icon priorityItem.icon class="md-menu-align-target"}}
+                  {{paper-icon priorityItem.icon title="Set priority" class="md-menu-align-target"}}
                   <span>{{priorityItem.title}}</span>
                 {{/content.menu-item}}
               {{/each}}
@@ -68,8 +68,8 @@
         
         {{#paper-menu as |menu|}}
           {{#menu.trigger}}
-            {{#paper-button onClick=null iconButton=true}}
-              {{paper-icon "more-vert" class="md-menu-origin"}}
+            {{#paper-button iconButton=true}}
+              {{paper-icon "more-vert" title="Actions" class="md-menu-origin"}}
             {{/paper-button}}
           {{/menu.trigger}}
           {{#menu.content class="task-list-item-menu" as |content|}}
