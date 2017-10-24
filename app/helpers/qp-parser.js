@@ -5,7 +5,7 @@ const QObject = Ember.Object.extend({
   values: null
 });
 
-export function qpParser(params/*, hash*/) {    
+export function qpParser(params) {    
   return QObject.create({
     values: params[0]
   });

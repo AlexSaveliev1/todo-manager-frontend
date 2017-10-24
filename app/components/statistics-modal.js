@@ -10,6 +10,10 @@ export default Ember.Component.extend({
     return this.get('tasks').filter(task => task.get('finishedAt')).length;
   }),
 
+  remainingTasks: Ember.computed('tasks', function () {
+    return this.get('tasks').filter(task => !task.get('finishedAt')).length;
+  }),
+
   summaryEstimated: Ember.computed('tasks', function () {
     const tasks = this.get('tasks').filter(task => !task.get('finishedAt')),
       summaryEstimatedMs = tasks.reduce((sum, task) => {

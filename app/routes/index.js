@@ -14,6 +14,7 @@ export default Ember.Route.extend({
     return RSVP.hash({
       tasks: this.store.findAll('task'),
       subtasks: this.store.findAll('subtask'),
+      comments: this.store.findAll('comment'),
       groups: groupQuery
     });
   }

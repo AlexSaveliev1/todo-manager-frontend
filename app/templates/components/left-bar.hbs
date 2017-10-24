@@ -28,7 +28,7 @@
         <ul class="left-bar-menu-list">
           {{#each current.m.groups as |group|}}
             {{#draggable-object-target action="dragTask" group=group overrideClass='dropTaskTarget'}}
-              {{left-bar/item tasks=group.tasks totalTasks=group.totalTasks item=group title=group.title onSave=(action "saveGroup") onDelete=(action "deleteGroup") param=group.param
+              {{left-bar/item tasks=group.tasks item=group title=group.title onSave=(action "saveGroup") onDelete=(action "deleteGroup") param=group.param
                 actionsButtons=true link="index.groups" className="left-bar-item"}} 
             {{/draggable-object-target}}
           {{/each}}
@@ -46,7 +46,7 @@
       <nav>
         <ul class="left-bar-menu-list">
           {{#each current.m.filters as |filter|}}
-            {{left-bar/item tasks=filter.tasks totalTasks=filter.totalTasks title=filter.title link=filter.link param=filter.param tagName="li" className="left-bar-item"}}
+            {{left-bar/item tasks=filter.tasks title=filter.title link=filter.link param=filter.param tagName="li" className="left-bar-item"}}
           {{/each}}
         </ul>
       </nav>

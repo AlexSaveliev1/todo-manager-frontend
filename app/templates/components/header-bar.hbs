@@ -1,5 +1,11 @@
-<header class="header-wrapper layout-row layout-align-start-center">
-  <div {{action "openMenu"}}>
-    {{paper-icon "menu"  size=25 class="header-menu-icon hide-gt-sm"}}
+<header class="header-bar-wrapper layout-row layout-align-start-center">
+  <div {{action "openMenu"}} class="hide-gt-sm">
+    {{paper-icon "menu"  size=25 class="header-bar-menu-icon"}}
   </div>
+  <div class="header-bar-logo-wrapper layout-row hide show-gt-sm margin-auto">
+    {{#link-to "index.today"}}
+      <img src="{{rootURL}}assets/logo.svg" alt="logo" class="header-bar-logo" />
+    {{/link-to}}
+  </div>
+  
 </header>

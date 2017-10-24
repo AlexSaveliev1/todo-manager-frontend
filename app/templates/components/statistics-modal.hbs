@@ -1,8 +1,8 @@
 {{#paper-dialog fullscreen=fullscreen clickOutsideToClose=true onClose=(action "close") origin=dialogOrigin}}
   {{#paper-dialog-content}}
     <h2 class="md-title">Statistics: {{title}}</h2>
-    {{log tasks}}
     <p>Total: {{tasks.length}}</p>
+    <p>Remaining Tasks: {{remainingTasks}}</p>
     <p>Completed: {{completed}}</p>
     <p>Summary estimated time: {{summaryEstimated}}</p>
     <p>Summary remaining time: {{summaryRemaining}}</p>

@@ -1,14 +1,25 @@
 @import '../variables';
 
-.header-wrapper {
+.header-bar-wrapper {
   height: $header-height;
   background-color: $primary-blue;
 
   box-sizing: border-box;
   padding-left: 20px;
 
-  .header-menu-icon {
+  .header-bar-logo-wrapper {
+    width: $main-container-width;
+
+    .header-bar-logo {
+      height: 35px;
+      width: auto;
+    }
+  }
+
+  .header-bar-menu-icon {
     color: $white;
+
+    margin-right: 10px;
 
     &:hover {
       cursor: pointer;

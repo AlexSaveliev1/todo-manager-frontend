@@ -9,6 +9,5 @@ export default DS.Model.extend({
   deletedAt: DS.attr('number'),
   group: DS.attr('number'),
   priority: DS.attr('number'),
-  subtasks: DS.attr('array'),
   order: DS.attr('number')
 });

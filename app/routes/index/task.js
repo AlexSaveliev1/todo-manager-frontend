@@ -6,7 +6,8 @@ export default Ember.Route.extend({
 
     return {
       task: this.store.peekRecord('task', Number(id)),
-      subtasks: this.store.peekAll('subtask').filter(subtask => subtask.get('task') === Number(id))
+      subtasks: this.store.peekAll('subtask').filter(subtask => subtask.get('task') === Number(id)),
+      comments: this.store.peekAll('comment').filter(comment => comment.get('task') === Number(id))
     };
   }
 });

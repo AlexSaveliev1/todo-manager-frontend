@@ -59,6 +59,7 @@ export default Ember.Component.extend({
   })),
 
   task: {},
+  newComment: {},
   remainingTime: '',
   addNewSubtaskMode: false,
 
@@ -84,6 +85,14 @@ export default Ember.Component.extend({
       });
 
       task.save();
+    },
+
+    addComment(newComment) {
+      const { task, comments } = this.getProperties('task', 'comments'),
+        comment = this.get('store').createRecord('comment', Object.assign(newComment, { task: task.get('id'), createdAt: this.get('timeManager').now() }));
+     
+        comment.save()
+        .then(savedComment => comments.pushObject(savedComment))
     },
 
     addSubtask(properties) {

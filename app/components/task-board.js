@@ -9,11 +9,13 @@ export default Ember.Component.extend({
   classNames: ['task-board-wrapper', 'flex-100', 'flex-gt-sm-75'],
 
   tasks: [],
-  sortedTasks: Ember.computed('tasks.[]', function () {
-    return this.get('tasks').sortBy('order');
-  }),
+  sortedTasks: [],
   addNewTaskMode: false,
   isConfirmDialogVisible: false,
+
+  sortedTasksObserver: Ember.on('init', Ember.observer('tasks.[]', function () {
+    return this.set('sortedTasks', this.get('tasks').sortBy('order'));
+  })),
 
   actions: {
     sortEndAction() {
@@ -60,7 +62,33 @@ export default Ember.Component.extend({
         updatedAt: this.get('timeManager').now()
       });
 
-      item.save();
+      item.save()
+        .then(() => {
+          const defaultPriority = this.get('defaultPriority');
+
+          if (defaultPriority && defaultPriority !== priority) {
+            setTimeout(() => {
+              this.get('sortedTasks').removeObject(item);
+            }, COMPLETED_TASK_DELAY);
+          }
+        });
+    },
+
+    dragStartAction(task) {
+      this.set('taskGroupBeforeDrag', task.get('group'))
+    },
+
+    dragEndAction(task) {
+      const { taskGroupBeforeDrag, defaultDueDate } = this.getProperties('taskGroupBeforeDrag', 'defaultDueDate'),
+        newTaskGroup = task.get('group');
+
+      if (!taskGroupBeforeDrag && !newTaskGroup || defaultDueDate) {
+        return;
+      }
+
+      if (taskGroupBeforeDrag !== newTaskGroup) {
+        this.get('sortedTasks').removeObject(task);
+      }
     }
   }
 });

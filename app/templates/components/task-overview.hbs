@@ -3,15 +3,11 @@
   onSave=(action "saveTask") onChangePriority=(action "changePriority")
   dueDateMs=task.dueDate groupId=task.groupId className="task-overview-item flex-gt-sm-80 flex-100"}}
 
-<div class="task-overview-completed">
-  {{#if task.finishedAt}}
-    <span>Forgot to do one thing</span>
-    {{#paper-button primary=true onClick=(action "markAsUncompleted" task)}}Uncomplete{{/paper-button}}
-  {{else}}
-    <span>I have been already complete this task</span>
-    {{#paper-button primary=true onClick=(action "markAsCompleted" task)}}Mark as completed{{/paper-button}}
-  {{/if}}
-</div>
+{{#if task.finishedAt}}
+  {{#paper-button primary=true onClick=(action "markAsUncompleted" task)}}Uncomplete{{/paper-button}}
+{{else}}
+  {{#paper-button primary=true onClick=(action "markAsCompleted" task)}}Mark as completed{{/paper-button}}
+{{/if}}
 
 <div class="task-overview-content-wrapper">
   <h4 class="task-overview-time-tracking-title">Time tracking:</h4>
@@ -37,5 +33,22 @@
     {{else}}
       <div {{action (mut addNewSubtaskMode) (not addNewSubtaskMode)}} class="task-overview-add-subtask-button">+ Add subtask</div>
     {{/if}}
+  </div>
+</div> 
+
+<div class="task-overview-content-wrapper">
+  <h4>Comments:</h4>
+  <div class="task-overview-comments-list flex-75">
+    <ul>
+      {{#each comments as |comment|}}
+        <li>{{comment.body}}</li>
+      {{/each}}
+    </ul>
+    
+    {{paper-input textarea=true block=true label="Comment" maxlength=50 passThru=(hash rows=2 maxRows=2)
+      value=newComment.body onChange=(action (mut newComment.body)) class="task-overview-content-comment-textarea"}}
+      <div class="layout-row layout-align-end">
+        {{#paper-button primary=true onClick=(action "addComment" newComment)}}Add comment{{/paper-button}}
+      </div>
   </div>
 </div>
