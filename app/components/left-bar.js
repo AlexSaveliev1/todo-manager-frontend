@@ -8,10 +8,9 @@ export default Ember.Component.extend({
   classNames: ['left-bar-wrapper', 'flex-100'],
 
   tasks: [],
-
   filters: [],
 
-  filtersObserver: Ember.on('init', Ember.observer('tasks.@each.finishedAt', 'tasks.@each.dueDate', 'tasks.@each.group', function () {
+  filtersObserver: Ember.on('init', Ember.observer('tasks.[]', 'tasks.@each.finishedAt', 'tasks.@each.group', 'tasks.@each.dueDate', function () {
     const inboxTasks = this.get('tasks').filter(task => !task.get('group')),
       todayTasks = this.get('tasks').filter(task => task.get('dueDate') === this.get('timeManager').getTodayMidnightMs()),
       weekTasks = this.get('tasks').filter(task => {
@@ -57,11 +56,7 @@ export default Ember.Component.extend({
       groups: this.get('groups').map(group => {
         let tasks = allTasks.filter(task => task.get('group') === Number(group.get('id')));
 
-        return Object.assign(group,
-          { tasks
-          },
-          { param: group.get('id')
-          });
+        return Object.assign(group, { tasks }, { param: group.get('id') });
       })
     },
     {
@@ -116,7 +111,8 @@ export default Ember.Component.extend({
     deleteGroup(item) {
       item.deleteRecord();
       item.save()
-        .then(group => this.get('menuTabs.firstObject.groups').removeObject(group));
+        .then(group => this.get('menuTabs.firstObject.groups').removeObject(group))
+        .then(() => this.get('router').transitionTo('index.inbox'));
     }
   }
 });

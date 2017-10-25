@@ -25,7 +25,7 @@
       }
     }
   }
-  
+
   .task-list-item-content {
     .task-list-item-input, .task-list-item-button {
       margin-top: 0;
@@ -76,7 +76,7 @@
         }
       }
     }
-    
+
     .task-list-item-value {
       min-height: 25px;      
       position: relative;
@@ -85,14 +85,14 @@
         color: $black;
         text-decoration: none;
       }
-      
+
       .task-list-item-edit-icon-wrapper {
         display: none;
         position: relative;
         bottom: 13px;
         left: 5px;
         user-select: none;
-  
+
         .task-list-item-edit-icon {
           cursor: pointer;
   

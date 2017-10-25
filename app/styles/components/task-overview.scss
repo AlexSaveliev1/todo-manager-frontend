@@ -32,11 +32,21 @@
       }
     }
 
-    .task-overview-content-comment-textarea {
-      margin-top: 35px;
+    .task-overview-comments-list {
+      padding-left: 10px;
+
+      .task-overview-comments-item {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+  
+      .task-overview-content-comment-textarea {
+        margin-top: 35px;
+      }
     }
   }
-  
+ 
 
   .task-overview-add-subtask-button {
     @extend .task-board-add-task-button

@@ -39,11 +39,9 @@
 <div class="task-overview-content-wrapper">
   <h4>Comments:</h4>
   <div class="task-overview-comments-list flex-75">
-    <ul>
-      {{#each comments as |comment|}}
-        <li>{{comment.body}}</li>
-      {{/each}}
-    </ul>
+    {{#each comments as |comment|}}
+      <div class="task-overview-comments-item">- {{comment.body}}</div>
+    {{/each}}
     
     {{paper-input textarea=true block=true label="Comment" maxlength=50 passThru=(hash rows=2 maxRows=2)
       value=newComment.body onChange=(action (mut newComment.body)) class="task-overview-content-comment-textarea"}}

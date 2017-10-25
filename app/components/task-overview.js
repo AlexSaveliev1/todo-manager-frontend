@@ -8,6 +8,11 @@ export default Ember.Component.extend({
 
   classNames: ['task-overview-wrapper', 'flex-100', 'flex-gt-sm-100'],
 
+  task: {},
+  newComment: {},
+  remainingTime: '',
+  addNewSubtaskMode: false,
+
   estimatedTime: Ember.computed('task', function () {
     const task = this.get('task'),
       { createdAt, dueDate } = task.getProperties('createdAt', 'dueDate'),
@@ -58,11 +63,6 @@ export default Ember.Component.extend({
     return this.set('remainingTime', remainingTime);
   })),
 
-  task: {},
-  newComment: {},
-  remainingTime: '',
-  addNewSubtaskMode: false,
-
   actions: {
     markAsCompleted(task) {
       task.set('finishedAt', this.get('timeManager').now());
@@ -92,7 +92,8 @@ export default Ember.Component.extend({
         comment = this.get('store').createRecord('comment', Object.assign(newComment, { task: task.get('id'), createdAt: this.get('timeManager').now() }));
      
         comment.save()
-        .then(savedComment => comments.pushObject(savedComment))
+          .then(savedComment => comments.pushObject(savedComment))
+          .then(() => this.set('newComment', {}));
     },
 
     addSubtask(properties) {
